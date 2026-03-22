@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ajeet Jaiswar Portfolio</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #121212; /* Subtle dark background */
+    --surface: #1e1e1e; /* Slightly lighter surface */
+    --border: #2c2c2c; /* Subtle border */
+    --border-dark: #3a3a3a; /* Slightly darker border */
+    --accent: #4a90e2; /* Softer accent color */
+    --text: #e0e0e0; /* Light gray text */
+    --text-muted: #b0b0b0; /* Muted gray text */
+    --win-title: #3a6ea5; /* Softer window title color */
+    --shadow: 2px 2px 0px #2c2c2c; /* Subtle shadow */
+    --font: 'Helvetica', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 17px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── TASKBAR ── */
+  .taskbar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 40px;
+    background: var(--bg);
+    border-top: 2px solid #fff;
+    box-shadow: 0 -1px 0 var(--border-dark);
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    gap: 8px;
+    z-index: 100;
+  }
+  .taskbar-start {
+    background: var(--bg);
+    border: 2px solid;
+    border-color: #fff #999 #999 #fff;
+    padding: 4px 14px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .taskbar-start:active { border-color: #999 #fff #fff #999; }
+  .taskbar-clock {
+    margin-left: auto;
+    border: 2px solid;
+    border-color: #999 #fff #fff #999;
+    padding: 4px 12px;
+    font-size: 14px;
+  }
+
+  /* ── DESKTOP / HERO ── */
+  .desktop {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px 80px;
+  }
+
+  /* ── WINDOW CHROME ── */
+  .window {
+    background: var(--surface);
+    border: 2px solid;
+    border-color: #fff #999 #999 #fff;
+    box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 680px;
+  }
+  .window-titlebar {
+    background: var(--win-title);
+    color: var(--win-title-text);
+    padding: 6px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: bold;
+    user-select: none;
+  }
+  .window-controls {
+    display: flex;
+    gap: 4px;
+  }
+  .win-btn {
+    width: 18px;
+    height: 16px;
+    background: var(--bg);
+    border: 2px solid;
+    border-color: #fff #999 #999 #fff;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-family: var(--font);
+    line-height: 1;
+  }
+  .window-body {
+    padding: 28px 32px 32px;
+  }
+
+  /* ── HERO CONTENT ── */
+  .hero-name {
+    font-size: clamp(36px, 6vw, 60px);
+    font-weight: 900;
+    letter-spacing: -1px;
+    line-height: 1.05;
+    margin-bottom: 6px;
+  }
+  .hero-role {
+    font-size: 18px;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 20px;
+    letter-spacing: 0.3px;
+  }
+  .hero-desc {
+    font-size: 17px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+  .hero-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+  .tag {
+    border: 2px solid;
+    border-color: #fff #999 #999 #fff;
+    background: var(--bg);
+    padding: 4px 12px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .hero-links {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    background: var(--bg);
+    border: 2px solid;
+    border-color: #fff #999 #999 #fff;
+    padding: 8px 20px;
+    font-size: 15px;
+    font-family: var(--font);
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--text);
+    display: inline-block;
+  }
+  .btn:active, .btn-primary:active { border-color: #999 #fff #fff #999; }
+  .btn-primary {
+    background: var(--win-title);
+    color: #fff;
+    border: 2px solid;
+    border-color: #6666cc #000033 #000033 #6666cc;
+    padding: 8px 20px;
+    font-size: 15px;
+    font-family: var(--font);
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  /* ── SCROLL HINT ── */
+  .scroll-hint {
+    margin-top: 48px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 15px;
+  }
+  .scroll-arrow {
+    display: block;
+    font-size: 22px;
+    animation: bounce 1.5s infinite;
+    margin-top: 4px;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+  }
+
+  /* ── SECTION DIVIDER ── */
+  .section-window {
+    background: var(--surface);
+    border: 2px solid;
+    border-color: #fff #999 #999 #fff;
+    box-shadow: var(--shadow);
+    margin: 0 auto;
+    max-width: 960px;
+    width: calc(100% - 48px);
+  }
+
+  /* ── PROJECTS SECTION ── */
+  #projects {
+    padding: 60px 24px 100px;
+  }
+  .projects-title {
+    max-width: 960px;
+    margin: 0 auto 24px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .projects-grid {
+    max-width: 960px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .project-card {
+    background: var(--surface);
+    border: 2px solid;
+    border-color: #fff #999 #999 #fff;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--text);
+    display: block;
+    transition: transform 0.1s;
+  }
+  .project-card:active { transform: translate(2px, 2px); box-shadow: none; }
+  .project-card:hover .card-title { text-decoration: underline; }
+
+  .card-titlebar {
+    background: var(--win-title);
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 13px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .card-dot {
+    width: 14px; height: 12px;
+    background: var(--bg);
+    border: 2px solid;
+    border-color: #fff #999 #999 #fff;
+  }
+  .card-thumb {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #1a1a1a;
+    overflow: hidden;
+    position: relative;
+  }
+  .card-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .card-thumb-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    background: #1a1a1a;
+    color: #444;
+  }
+  .card-body {
+    padding: 16px 18px 18px;
+  }
+  .card-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .card-title {
+    font-size: 19px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    letter-spacing: -0.3px;
+    line-height: 1.2;
+  }
+  .card-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+  .card-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .card-tag {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+
+  /* ── CLOCK ── */
+  #clock { font-family: var(--font); }
+</style>
+</head>
+<body>
+
+<!-- HERO / DESKTOP -->
+<div class="desktop">
+  <div class="window">
+    <div class="window-titlebar">
+      <span>Ajeet Jaiswar</span>
+      <div class="window-controls">
+        <div class="win-btn">_</div>
+        <div class="win-btn">□</div>
+        <div class="win-btn">✕</div>
+      </div>
+    </div>
+    <div class="window-body">
+      <div class="hero-name">Ajeet Jaiswar</div>
+      <div class="hero-role">Game Developer · Unity · C# · Narrative Design</div>
+      <p class="hero-desc">
+        Final year B.Tech student in Electronics and Computer Engineering with a Minors in AR/VR. I make games because I love building AI systems that feel alive and stories that actually mean something.
+      </p>
+      <div class="hero-tags">
+        <span class="tag">Unity C#</span>
+        <span class="tag">AI Design</span>
+        <span class="tag">Narrative Design</span>
+      </div>
+      <div class="hero-links">
+        <a class="btn-primary" href="#projects">View My Projects ↓</a>
+        <a class="btn" href="/cdn-cgi/l/email-protection#bddcd7d8d8c9dcdfd5d4d0dcd3c4c8d7dcd4cecadccffddad0dcd4d193ded2d0">Contact Me</a>
+        <a class="btn" href="https://github.com/Humble-Zen" target="_blank">GitHub</a>
+        <a class="btn" href="https://humble-zen.itch.io/" target="_blank">itch.io</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    Scroll down to see my work
+    <span class="scroll-arrow">↓</span>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<div id="projects">
+  <div class="projects-title">My Projects</div>
+  <div class="projects-grid">
+
+    <!-- Zombie AI -->
+    <a class="project-card" href="zombie.html">
+      <div class="card-titlebar">
+        <span>📁 Advanced Zombie AI</span>
+        <div class="card-dot"></div>
+      </div>
+      <div class="card-thumb">
+        <img src="sprintHeard.gif" alt="Zombie">
+      </div>
+      <div class="card-body">
+        <div class="card-label">Unity · AI · State Machine</div>
+        <div class="card-title">Advanced Zombie AI</div>
+        <p class="card-desc">8-state enemy AI with tiered sound detection, squad alerting, player memory, and dynamic music crossfade.</p>
+        <div class="card-tags">
+          <span class="card-tag">State Machine</span>
+          <span class="card-tag">NavMesh</span>
+          <span class="card-tag">Sound Detection</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Companion AI -->
+    <a class="project-card" href="companion.html">
+      <div class="card-titlebar">
+        <span>📁 Companion AI</span>
+        <div class="card-dot"></div>
+      </div>
+      <div class="card-thumb">
+        <div class="card-thumb-placeholder">🤝</div>
+      </div>
+      <div class="card-body">
+        <div class="card-label">Unity · AI · State Machine · Physics</div>
+        <div class="card-title">Companion AI</div>
+        <p class="card-desc">Modular survivor companion with 7-state FSM, velocity-based follow anchor, parabolic bottle throwing, and a decoupled event-driven architecture.</p>
+        <div class="card-tags">
+          <span class="card-tag">State Machine</span>
+          <span class="card-tag">NavMesh</span>
+          <span class="card-tag">Physics</span>
+          <span class="card-tag">Loot System</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Be Safe Lily -->
+    <a class="project-card" href="besafe.html">
+      <div class="card-titlebar">
+        <span>📁 Be Safe Lily</span>
+        <div class="card-dot"></div>
+      </div>
+      <div class="card-thumb">
+        <img src="Besafe_MonsterShoot.gif" alt="Be Safe Lily gameplay">
+      </div>
+      <div class="card-body">
+        <div class="card-label">Unity · Horror · Game Jam</div>
+        <div class="card-title">Be Safe Lily</div>
+        <p class="card-desc">A psychological horror game about dementia and grief, built in 10 days. Every "protective" act reenacts tragedy.</p>
+        <div class="card-tags">
+          <span class="card-tag">FPS</span>
+          <span class="card-tag">NavMesh AI</span>
+          <span class="card-tag">Narrative</span>
+          <span class="card-tag">10 Days</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- AgriDrip -->
+    <a class="project-card" href="agridrip.html">
+      <div class="card-titlebar">
+        <span>📁 AgriDrip Dashboard</span>
+        <div class="card-dot"></div>
+      </div>
+      <div class="card-thumb">
+        <img src="AgridripMain.gif" alt="Dashboard">
+      </div>
+      <div class="card-body">
+        <div class="card-label">Unity · IoT · Firebase</div>
+        <div class="card-title">AgriDrip Dashboard</div>
+        <p class="card-desc">Real-time smart farming dashboard with Firebase IoT integration, multilingual UI, and automated irrigation control.</p>
+        <div class="card-tags">
+          <span class="card-tag">Firebase</span>
+          <span class="card-tag">REST API</span>
+          <span class="card-tag">Twilio</span>
+          <span class="card-tag">National Hackathon</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- A* Implementation -->
+    <a class="project-card" href="crimson.html">
+      <div class="card-titlebar">
+        <span>📁 A* Implementation</span>
+        <div class="card-dot"></div>
+      </div>
+      <div class="card-thumb">
+        <img src="Navigation.gif" alt="A* Navigation">
+      </div>
+      <div class="card-body">
+        <div class="card-label">Unity · Algorithm · Editor Tool</div>
+        <div class="card-title">A* Implementation</div>
+        <p class="card-desc">Turn-based tactical prototype with from-scratch A* pathfinding and custom Unity editor tooling.</p>
+        <div class="card-tags">
+          <span class="card-tag">A* Algorithm</span>
+          <span class="card-tag">Grid AI</span>
+          <span class="card-tag">Custom Editor</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Brothers on the Hill -->
+    <a class="project-card" href="brothers.html">
+      <div class="card-titlebar">
+        <span>📁 Brothers on the Hill</span>
+        <div class="card-dot"></div>
+      </div>
+      <div class="card-thumb">
+        <div class="card-thumb-placeholder">🏚</div>
+      </div>
+      <div class="card-body">
+        <div class="card-label">Unity · Narrative · WIP</div>
+        <div class="card-title">Brothers on the Hill <span style="font-size:12px;font-weight:400;color:#c00;">WIP</span></div>
+        <p class="card-desc">Post-apocalyptic survival narrative. Two brothers. A hilltop shelter. Dangerous scavenging runs through zombie-infested zones.</p>
+        <div class="card-tags">
+          <span class="card-tag">Survival</span>
+          <span class="card-tag">Narrative</span>
+          <span class="card-tag">In Progress</span>
+          <span class="card-tag" style="border-color:#4a90e2;color:#4a90e2;">📄 GDD Available</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<!-- TASKBAR -->
+<div class="taskbar">
+  <div class="taskbar-start">🪟 Start</div>
+  <div class="taskbar-clock" id="clock"></div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  function updateClock() {
+    const now = new Date();
+    document.getElementById('clock').textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+</script>
+</body>
+</html>

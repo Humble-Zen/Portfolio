@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be Safe Lily Ajeet Jaiswar</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0d1117; /* Deep dark background */
+    --surface: #1a1f2e; /* Richer surface color */
+    --border: #30363d; /* Better defined border */
+    --border-dark: #484f58; /* Slightly darker border */
+    --accent: #58a6ff; /* Vibrant blue accent */
+    --accent-secondary: #79c0ff; /* Lighter accent */
+    --text: #f0f6fc; /* Crisp white text */
+    --text-muted: #95a5ad; /* Better muted text */
+    --win-title: #1f6feb; /* Vibrant window title */
+    --shadow: 2px 2px 0px #0d0d0d; /* Stronger shadow */
+    --font: 'Helvetica', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 17px;
+    line-height: 1.65;
+    padding-bottom: 60px;
+  }
+
+  /* ── NAV BAR ── */
+  .navbar {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--surface);
+    border-bottom: 2px solid;
+    border-color: #fff #999 #999 #fff;
+    box-shadow: 0 2px 0 var(--border-dark);
+    display: flex;
+    align-items: center;
+    padding: 8px 24px;
+    gap: 12px;
+  }
+  .nav-back {
+    background: var(--surface);
+    border: 2px solid;
+    border-color: #fff #999 #999 #fff;
+    padding: 6px 16px;
+    font-family: var(--font);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s ease;
+  }
+  .nav-back:hover {
+    background: #232d3f;
+    color: var(--accent);
+  }
+  .nav-back:active { border-color: #999 #fff #fff #999; }
+  .nav-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-muted);
+  }
+  .nav-sep { color: var(--border-dark); }
+
+  /* ── WINDOW ── */
+  .window {
+    background: var(--surface);
+    border: 2px solid;
+    border-color: #fff #999 #999 #fff;
+    box-shadow: var(--shadow);
+  }
+  .window-titlebar {
+    background: linear-gradient(180deg, var(--win-title) 0%, #164ebf 100%);
+    color: #fff;
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: bold;
+    user-select: none;
+  }
+  .window-controls { display: flex; gap: 4px; }
+  .win-btn {
+    width: 18px; height: 16px;
+    background: var(--surface);
+    border: 2px solid;
+    border-color: #fff #999 #999 #fff;
+    font-size: 10px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+  }
+  .window-body { padding: 28px 32px; }
+
+  /* ── LAYOUT ── */
+  .page-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  /* ── HERO BLOCK ── */
+  .hero-meta {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent-secondary);
+    margin-bottom: 8px;
+  }
+  .hero-title {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 900;
+    letter-spacing: -1px;
+    line-height: 1.05;
+    margin-bottom: 12px;
+  }
+  .hero-sub {
+    font-size: 18px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  .stat-row {
+    display: flex;
+    gap: 0;
+    flex-wrap: wrap;
+    border: 2px solid;
+    border-color: #999 #fff #fff #999;
+    margin-bottom: 4px;
+  }
+  .stat {
+    flex: 1;
+    min-width: 100px;
+    padding: 14px 20px;
+    border-right: 1px solid var(--border-dark);
+    background: var(--bg);
+  }
+  .stat:last-child { border-right: none; }
+  .stat-num {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* ── TABS ── */
+  .tab-bar {
+    display: flex;
+    border-bottom: 2px solid var(--border-dark);
+    gap: 0;
+  }
+  .tab {
+    padding: 10px 22px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-bottom: none;
+    background: var(--surface);
+    font-family: var(--font);
+    color: var(--text-muted);
+    position: relative;
+    bottom: -2px;
+  }
+  .tab.active {
+    background: var(--surface);
+    border-color: var(--border-dark);
+    color: var(--text);
+  }
+  .tab-pane { display: none; padding-top: 28px; }
+  .tab-pane.active { display: block; }
+
+  /* ── GIF GALLERY ── */
+  .gif-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 4px;
+  }
+  .gif-item {
+    background: #111;
+    border: 2px solid;
+    border-color: #999 #fff #fff #999;
+    overflow: hidden;
+  }
+  .gif-item.wide {
+    grid-column: 1 / -1;
+  }
+  .gif-item img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+  }
+  .gif-caption {
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── STORY BEATS ── */
+  .story-beat {
+    border-left: 4px solid var(--win-title);
+    padding: 16px 20px;
+    background: var(--bg);
+    margin-bottom: 12px;
+  }
+  .beat-tag {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .beat-text {
+    font-size: 17px;
+    color: var(--text);
+    line-height: 1.7;
+  }
+  .beat-text strong { color: var(--win-title); }
+  .beat-text em { color: #c00; font-style: normal; font-weight: 600; }
+
+  .story-beat.twist { border-left-color: #c00; }
+  .story-beat.twist .beat-tag { color: #c00; }
+  .story-beat.end { border-left-color: #555; }
+
+  /* ── PULL QUOTE ── */
+  .pull-quote {
+    background: var(--win-title);
+    color: #fff;
+    padding: 24px 28px;
+    margin: 4px 0;
+  }
+  .pull-quote-text {
+    font-size: clamp(18px, 3vw, 24px);
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 10px;
+  }
+  .pull-quote-text em { color: #99ccff; font-style: normal; }
+  .pull-quote-attr {
+    font-size: 13px;
+    opacity: 0.7;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── TECH BLOCKS ── */
+  .tech-block {
+    margin-bottom: 28px;
+  }
+  .tech-h {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border-dark);
+    color: var(--win-title);
+  }
+  .tech-p {
+    font-size: 17px;
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin-bottom: 10px;
+  }
+  .tech-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .tech-list li {
+    font-size: 17px;
+    color: var(--text-muted);
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.65;
+  }
+  .tech-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--win-title);
+    font-weight: 700;
+  }
+  .tech-list li strong { color: var(--text); }
+
+  /* ── SKILLS PILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px;
+  }
+  .skill-pill {
+    padding: 12px 14px;
+    background: var(--bg);
+    border: 2px solid;
+    border-color: #fff #999 #999 #fff;
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+  .skill-pill strong {
+    display: block;
+    color: var(--text);
+    font-size: 15px;
+    margin-bottom: 3px;
+  }
+
+  /* ── PROJECT NAV ── */
+  .project-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .nav-proj-btn {
+    background: var(--bg);
+    border: 2px solid;
+    border-color: #fff #999 #999 #fff;
+    padding: 12px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: var(--font);
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 180px;
+  }
+  .nav-proj-btn:active { border-color: #999 #fff #fff #999; }
+  .nav-proj-btn.next { justify-content: flex-end; text-align: right; }
+  .nav-proj-btn .proj-label {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-muted);
+    display: block;
+  }
+  .nav-proj-btn .proj-name {
+    font-size: 16px;
+    font-weight: 700;
+    display: block;
+  }
+
+  /* ── TASKBAR ── */
+  .taskbar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 40px;
+    background: var(--bg);
+    border-top: 2px solid #fff;
+    box-shadow: 0 -1px 0 var(--border-dark);
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    gap: 8px;
+    z-index: 100;
+  }
+  .taskbar-btn {
+    background: var(--bg);
+    border: 2px solid;
+    border-color: #fff #999 #999 #fff;
+    padding: 4px 14px;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: var(--font);
+    cursor: pointer;
+  }
+  .taskbar-clock {
+    margin-left: auto;
+    border: 2px solid;
+    border-color: #999 #fff #fff #999;
+    padding: 4px 12px;
+    font-size: 14px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .gif-grid { grid-template-columns: 1fr; }
+    .gif-item.wide { grid-column: auto; }
+    .stat-row { flex-direction: column; }
+    .window-body { padding: 20px 18px; }
+    .page-wrap { padding: 20px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="navbar">
+  <a class="nav-back" href="index.html">← Back</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-title">Be Safe Lily</span>
+</div>
+
+<div class="page-wrap">
+
+  <!-- HERO -->
+  <div class="window">
+    <div class="window-titlebar">
+      <span>🕯 Be Safe Lily Project Overview</span>
+      <div class="window-controls">
+        <div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn">✕</div>
+      </div>
+    </div>
+    <div class="window-body">
+      <div class="hero-meta">Unity · First-Person Horror · Stop Killing Games Jam</div>
+      <div class="hero-title">Be Safe Lily</div>
+      <p class="hero-sub">A psychological horror game about dementia, grief, and fire. Built in 10 days. Every "protective" act the player performs reenacts the original tragedy.</p>
+      <div class="stat-row">
+        <div class="stat"><div class="stat-num">10</div><div class="stat-label">Days Built</div></div>
+        <div class="stat"><div class="stat-num">21</div><div class="stat-label">Scripts</div></div>
+        <div class="stat"><div class="stat-num">7</div><div class="stat-label">Subsystems</div></div>
+        <div class="stat"><div class="stat-num">2</div><div class="stat-label">Phase Puzzle</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="window">
+    <div class="window-titlebar">
+      <span>📂 Project Files</span>
+      <div class="window-controls">
+        <div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn">✕</div>
+      </div>
+    </div>
+    <div class="window-body">
+
+      <div class="tab-bar">
+        <button class="tab active" onclick="switchTab(this,'tab-story')">Story</button>
+        <button class="tab" onclick="switchTab(this,'tab-gameplay')">Gameplay</button>
+        <button class="tab" onclick="switchTab(this,'tab-tech')">Technical</button>
+        <button class="tab" onclick="switchTab(this,'tab-skills')">Skills</button>
+      </div>
+
+      <!-- STORY TAB -->
+      <div class="tab-pane active" id="tab-story">
+
+        <div class="pull-quote">
+          <div class="pull-quote-text">"The routine continues. The memory remains incomplete. <em>And the father continues to protect a daughter who is no longer there.</em>"</div>
+          <div class="pull-quote-attr">Be Safe Lily</div>
+        </div>
+
+        <div style="height:20px;"></div>
+
+        <div class="story-beat">
+  <div class="beat-tag">Act I: The Routine</div>
+  <div class="beat-text">A father and his young daughter <strong>Lily</strong> lived a quiet life on a farm. Every day they followed the same simple routine, walking through the fields, harvesting vegetables, and spending time together. These small, repetitive moments defined their bond.</div>
+</div>
+
+<div class="story-beat">
+  <div class="beat-tag">The Fracture</div>
+  <div class="beat-text">Over time the father developed <strong>dementia</strong>. His memory began to deteriorate, but fragments of his daily life remained, especially the routine he shared with Lily. Even as reality faded, this pattern persisted. Then <em>a fire broke out on the farm. Lily died.</em></div>
+</div>
+
+<div class="story-beat">
+  <div class="beat-tag">Act II: The Reconstruction</div>
+  <div class="beat-text">Unable to process the loss, <strong>the father's mind reconstructs a version of reality where Lily is still present</strong>. He continues his daily routine, harvesting crops, moving through the farm, preparing to protect her. The world is unstable. The farm is filled with hostile entities: manifestations of perceived threats. The father arms himself and eliminates them, believing he is keeping Lily safe.</div>
+</div>
+
+<div class="story-beat twist">
+  <div class="beat-tag">The Puzzle: Mechanics as Metaphor</div>
+  <div class="beat-text">His actions lead him toward a <strong>locked space</strong>, something his mind has buried. To retrieve the key he must <strong>burn a pile of hay</strong>. To him this is necessary, clearing danger and doing what must be done. <em>He does not know he has done this before.</em></div>
+</div>
+
+<div class="story-beat twist">
+  <div class="beat-tag">Act III: The Unlocking</div>
+  <div class="beat-text">With the key in hand he unlocks the door. <strong>Inside, the illusion breaks.</strong> He is confronted with Lily's lifeless body. His mind cannot fully comprehend what he is seeing, it reshapes the moment into something he can act upon. He does what he believes is right. <em>He uses fire once more.</em></div>
+</div>
+
+<div class="story-beat end">
+  <div class="beat-tag">The Loop</div>
+  <div class="beat-text">In doing so he <strong>unknowingly reenacts the very tragedy that took Lily's life</strong>. The routine continues. The memory remains incomplete. And the father continues to protect a daughter who is no longer there.</div>
+</div>
+
+      </div>
+
+      <!-- GAMEPLAY TAB -->
+      <div class="tab-pane" id="tab-gameplay">
+
+  <div class="gif-grid">
+    <div class="gif-item wide">
+      <img src="Besafe_MonsterShoot.gif" alt="Monster shooting Where am I? These monsters, I need to kill them.">
+      <div class="gif-caption">"Where am I? And these monsters. I need to kill them." The father fights perceived threats in the dark farm.</div>
+    </div>
+
+    <div class="gif-item">
+      <img src="Besafe_BaseJumpScare.gif" alt="Jump scare moment">
+      <div class="gif-caption">Jump scare. The world is unstable and hostile.</div>
+    </div>
+
+    <div class="gif-item">
+      <img src="Besafe_furniturescare.gif" alt="I have Dementia?? locked door">
+      <div class="gif-caption">"I have Dementia??" The father confronts a locked door, confused about reality.</div>
+    </div>
+
+    <div class="gif-item">
+      <img src="Besafe_burnfuel.gif" alt="Burn Hay and get key objective">
+      <div class="gif-caption">Objective Burn Hay and get key. "Lily threw the key in the hay outside." The two phase fire puzzle.</div>
+    </div>
+
+    <div class="gif-item">
+      <img src="Besafe_Pickup.gif" alt="Following the fire">
+      <div class="gif-caption">"I should follow the fire." Navigating the dark farm by the light of flame.</div>
+    </div>
+
+    <div class="gif-item wide">
+      <img src="Besafe_end.gif" alt="The ending I heard her voice soft like the wind brush">
+      <div class="gif-caption">"I heard her voice. Soft like the wind brush." The father finds Lily's body. The illusion breaks.</div>
+    </div>
+  </div>
+
+      </div>
+
+      <!-- TECHNICAL TAB -->
+      <div class="tab-pane" id="tab-tech">
+
+  <div class="tech-block">
+    <div class="tech-h">Interaction</div>
+    <p class="tech-p"><strong>IInteractable</strong> is a single-method interface. Any MonoBehaviour that implements Interact() gets picked up by the player's screen-center raycast automatically doors, drawers, pickups, burnables, boards. No special-casing per object type in the player script.</p>
+  </div>
+
+  <div class="tech-block">
+    <div class="tech-h">The Fire Puzzle</div>
+    <ul class="tech-list">
+      <li><strong>Burnable implements IInteractable</strong> same detection path as everything else.</li>
+      <li>Phase 1: fuel it with weapon slot 1. Phase 2: ignite with weapon slot 2, but only if <code>isFueled</code> is true. You can't skip the step.</li>
+      <li>The mechanic and the story are the same thing. The act the father thinks clears danger is the act that killed Lily.</li>
+    </ul>
+  </div>
+
+  <div class="tech-block">
+    <div class="tech-h">Shooting</div>
+    <ul class="tech-list">
+      <li>Camera.ScreenPointToRay from screen center bullets always go where the crosshair is.</li>
+      <li>Four coroutines handle GunRecoil, FlashEffect, GunCooldown, and Reload independently. No timer variables cluttering Update().</li>
+      <li><strong>Dirty flag UI</strong> P_Gun_UI caches the last bullet/magazine values and only writes to TextMeshPro when they change. No per-frame string allocation.</li>
+    </ul>
+  </div>
+
+  <div class="tech-block">
+    <div class="tech-h">Quest System</div>
+    <ul class="tech-list">
+      <li><strong>QuestData ScriptableObject</strong> questID, title, description, List&lt;QuestObjective&gt;. Designers create quests in the Inspector with no code.</li>
+      <li>Objectives update via events, not polling.</li>
+    </ul>
+  </div>
+
+  <div class="tech-block">
+    <div class="tech-h">FPS Feel</div>
+    <ul class="tech-list">
+      <li>Head bob on sine/cosine wave tied to speed Y for bounce, X for sway at half frequency. It reads as natural without being nauseating.</li>
+      <li><strong>Hysteresis on isMoving</strong> higher threshold to start than to stop, so micro-inputs don't cause the bob to stutter on and off.</li>
+      <li>Random footstep clip selection with pitch variation (0.9–1.1) so the same loop doesn't become grating over a 10-minute session.</li>
+    </ul>
+  </div>
+
+  <div class="tech-block">
+    <div class="tech-h">Enemies</div>
+    <p class="tech-p">Same Advanced Zombie AI system from my standalone project 8-state FSM, tiered sound detection, squad alerting. Here they're framed as manifestations of the father's paranoia rather than literal zombies.</p>
+  </div>
+
+</div>
+
+      <!-- SKILLS TAB -->
+      <div class="tab-pane" id="tab-skills">
+  <div class="skills-grid">
+    <div class="skill-pill"><strong>Interface Architecture</strong>IInteractable polymorphs 10 plus object types</div>
+    <div class="skill-pill"><strong>ScriptableObject Quests</strong>Designer editable without code changes</div>
+    <div class="skill-pill"><strong>Coroutine Systems</strong>Reload, recoil, head bob, bullet trace</div>
+    <div class="skill-pill"><strong>FPS Controller</strong>Head bob, FOV transitions, footstep audio</div>
+    <div class="skill-pill"><strong>Narrative Design</strong>Mechanics as metaphor, embedded story</div>
+    <div class="skill-pill"><strong>Puzzle Gate Design</strong>Two phase fire enforces sequencing</div>
+    <div class="skill-pill"><strong>Ragdoll Physics</strong>isKinematic toggling on Rigidbody arrays</div>
+    <div class="skill-pill"><strong>Dirty Flag UI</strong>TMP updates only on value change, no GC pressure</div>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+  <!-- PROJECT NAVIGATION -->
+  <div class="window">
+    <div class="window-titlebar">
+      <span>🗂 Other Projects</span>
+      <div class="window-controls"><div class="win-btn">✕</div></div>
+    </div>
+    <div class="window-body">
+      <div class="project-nav">
+        <a class="nav-proj-btn" href="agridrip.html">
+          <span>←</span>
+          <span>
+            <span class="proj-label">Previous Project</span>
+            <span class="proj-name">AgriDrip Dashboard</span>
+          </span>
+        </a>
+        <a class="nav-proj-btn" href="index.html" style="flex:0;min-width:auto;padding:12px 24px;">All Projects</a>
+        <a class="nav-proj-btn next" href="crimson.html">
+          <span>
+            <span class="proj-label">Next Project</span>
+            <span class="proj-name">A* Implementation</span>
+          </span>
+          <span>→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- TASKBAR -->
+<div class="taskbar">
+  <a href="index.html" class="taskbar-btn">🪟 Start</a>
+  <div class="taskbar-btn">🕯 Be Safe Lily</div>
+  <div class="taskbar-clock" id="clock"></div>
+</div>
+
+<script>
+  function switchTab(btn, paneId) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(paneId).classList.add('active');
+  }
+  function updateClock() {
+    document.getElementById('clock').textContent =
+      new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+</script>
+</body>
+</html>

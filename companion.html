@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Companion AI Ajeet Jaiswar</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  :root{
+    --bg:#121212;
+    --surface:#1e1e1e;
+    --border:#2c2c2c;
+    --border-dark:#3a3a3a;
+    --accent:#4a90e2;
+    --text:#e0e0e0;
+    --text-muted:#b0b0b0;
+    --win-title:#3a6ea5;
+    --font:'Helvetica',sans-serif;
+    --shadow:2px 2px 0px #2c2c2c;
+  }
+  body{background:var(--bg);font-family:var(--font);font-size:17px;color:var(--text);line-height:1.65;padding-bottom:60px;}
+
+  .navbar{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:2px solid;border-color:#fff #999 #999 #fff;box-shadow:0 2px 0 var(--border-dark);display:flex;align-items:center;padding:8px 24px;gap:12px;}
+  .nav-back{background:var(--surface);border:2px solid;border-color:#fff #999 #999 #fff;padding:6px 16px;font-family:var(--font);font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;color:var(--text);display:flex;align-items:center;gap:6px;}
+  .nav-back:active{border-color:#999 #fff #fff #999;}
+  .nav-title{font-size:15px;font-weight:700;color:var(--text-muted);}
+  .nav-sep{color:var(--border-dark);}
+
+  .window{background:var(--surface);border:2px solid;border-color:#fff #999 #999 #fff;box-shadow:var(--shadow);}
+  .window-titlebar{background:var(--win-title);color:#fff;padding:6px 12px;display:flex;align-items:center;justify-content:space-between;font-size:14px;font-weight:bold;user-select:none;}
+  .window-controls{display:flex;gap:4px;}
+  .win-btn{width:18px;height:16px;background:var(--bg);border:2px solid;border-color:#fff #999 #999 #fff;font-size:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+  .window-body{padding:28px 32px;}
+
+  .page-wrap{max-width:900px;margin:0 auto;padding:32px 24px;display:flex;flex-direction:column;gap:28px;}
+
+  .hero-meta{font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+  .hero-title{font-size:clamp(32px,5vw,52px);font-weight:900;letter-spacing:-1px;line-height:1.05;margin-bottom:12px;}
+  .hero-sub{font-size:18px;color:var(--text-muted);margin-bottom:20px;line-height:1.6;}
+
+  .stat-row{display:flex;flex-wrap:wrap;border:2px solid;border-color:#999 #fff #fff #999;}
+  .stat{flex:1;min-width:100px;padding:14px 20px;border-right:1px solid var(--border-dark);background:var(--bg);}
+  .stat:last-child{border-right:none;}
+  .stat-num{font-size:28px;font-weight:900;color:var(--win-title);line-height:1;margin-bottom:4px;}
+  .stat-label{font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);}
+
+  .tab-bar{display:flex;border-bottom:2px solid var(--border-dark);flex-wrap:wrap;}
+  .tab{padding:10px 22px;font-size:15px;font-weight:600;cursor:pointer;border:2px solid transparent;border-bottom:none;background:var(--bg);font-family:var(--font);color:var(--text-muted);position:relative;bottom:-2px;}
+  .tab.active{background:var(--surface);border-color:var(--border-dark);color:var(--text);}
+  .tab-pane{display:none;padding-top:28px;}
+  .tab-pane.active{display:block;}
+
+  .tech-block{margin-bottom:28px;}
+  .tech-h{font-size:16px;font-weight:800;text-transform:uppercase;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--border-dark);color:var(--win-title);}
+  .tech-p{font-size:17px;color:var(--text-muted);line-height:1.75;margin-bottom:10px;}
+  .tech-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+  .tech-list li{font-size:17px;color:var(--text-muted);padding-left:20px;position:relative;line-height:1.65;}
+  .tech-list li::before{content:'→';position:absolute;left:0;color:var(--accent);font-weight:700;}
+  .tech-list li strong{color:var(--text);}
+
+  .state-table{width:100%;border-collapse:collapse;margin-bottom:20px;font-size:15px;}
+  .state-table th{background:var(--win-title);color:#fff;padding:10px 14px;text-align:left;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+  .state-table td{padding:10px 14px;border-bottom:1px solid var(--border-dark);color:var(--text-muted);vertical-align:top;line-height:1.6;}
+  .state-table td:first-child{color:var(--text);font-weight:700;white-space:nowrap;}
+  .state-table tr:last-child td{border-bottom:none;}
+  .state-table tr:nth-child(even) td{background:#1a1a1a;}
+
+  .skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;}
+  .skill-pill{padding:12px 14px;background:var(--bg);border:2px solid;border-color:#fff #999 #999 #fff;font-size:14px;color:var(--text-muted);}
+  .skill-pill strong{display:block;color:var(--text);font-size:15px;margin-bottom:3px;}
+
+  .code-block{background:#0d0d0d;border:1px solid var(--border-dark);padding:14px 18px;font-family:monospace;font-size:14px;color:#b0c4de;line-height:1.7;margin-bottom:16px;overflow-x:auto;}
+
+  .project-nav{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
+  .nav-proj-btn{background:var(--bg);border:2px solid;border-color:#fff #999 #999 #fff;padding:12px 20px;font-size:15px;font-weight:600;font-family:var(--font);cursor:pointer;text-decoration:none;color:var(--text);display:flex;align-items:center;gap:8px;flex:1;min-width:180px;}
+  .nav-proj-btn:active{border-color:#999 #fff #fff #999;}
+  .nav-proj-btn.next{justify-content:flex-end;text-align:right;}
+  .proj-label{font-size:12px;font-weight:400;color:var(--text-muted);display:block;}
+  .proj-name{font-size:16px;font-weight:700;display:block;}
+
+  .taskbar{position:fixed;bottom:0;left:0;right:0;height:40px;background:var(--bg);border-top:2px solid #fff;box-shadow:0 -1px 0 var(--border-dark);display:flex;align-items:center;padding:0 8px;gap:8px;z-index:100;}
+  .taskbar-btn{background:var(--bg);border:2px solid;border-color:#fff #999 #999 #fff;padding:4px 14px;font-size:14px;font-weight:bold;font-family:var(--font);cursor:pointer;text-decoration:none;color:var(--text);}
+  .taskbar-clock{margin-left:auto;border:2px solid;border-color:#999 #fff #fff #999;padding:4px 12px;font-size:14px;}
+
+  @media(max-width:600px){.window-body{padding:20px 16px;}.page-wrap{padding:20px 16px;}.stat-row{flex-direction:column;}.state-table{font-size:13px;}}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <a class="nav-back" href="index.html">← Back</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-title">Companion AI</span>
+</div>
+
+<div class="page-wrap">
+
+  <!-- HERO -->
+  <div class="window">
+    <div class="window-titlebar">
+      <span>🤝 Companion AI: Survivor System</span>
+      <div class="window-controls">
+        <div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn">✕</div>
+      </div>
+    </div>
+    <div class="window-body">
+      <div class="hero-meta">Unity · C# · NavMesh · State Machine · Physics Projectile · Loot System</div>
+      <div class="hero-title">Companion AI</div>
+      <p class="hero-sub">A survivor companion for a third-person zombie game. She follows you, hides when you tell her to, throws bottles, and scavenges supplies all from a 7-state FSM across 4 scripts. Built so adding new commands doesn't mean touching existing ones.</p>
+      <div class="stat-row">
+        <div class="stat"><div class="stat-num">4</div><div class="stat-label">Scripts</div></div>
+        <div class="stat"><div class="stat-num">7</div><div class="stat-label">AI States</div></div>
+        <div class="stat"><div class="stat-num">5</div><div class="stat-label">C# Events</div></div>
+        <div class="stat"><div class="stat-num">7</div><div class="stat-label">Commands</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="window">
+    <div class="window-titlebar">
+      <span>📂 Project Files</span>
+      <div class="window-controls">
+        <div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn">✕</div>
+      </div>
+    </div>
+    <div class="window-body">
+
+      <div class="tab-bar">
+        <button class="tab active" onclick="switchTab(this,'tab-overview')">Overview</button>
+        <button class="tab" onclick="switchTab(this,'tab-states')">State Machine</button>
+        <button class="tab" onclick="switchTab(this,'tab-tech')">Technical</button>
+        <button class="tab" onclick="switchTab(this,'tab-skills')">Skills</button>
+      </div>
+
+      <!-- OVERVIEW TAB -->
+      <div class="tab-pane active" id="tab-overview">
+
+        <div class="tech-block">
+          <div class="tech-h">How it's structured</div>
+          <p class="tech-p"><strong>CompanionAI</strong> is the central script. Everything else either calls its public command methods or subscribes to its events no script holds a direct reference to another.</p>
+          <ul class="tech-list">
+            <li><strong>CompanionAI.cs</strong> state machine, NavMesh movement, perception, all commands</li>
+            <li><strong>CompanionInputHandler.cs</strong> maps keybinds to CompanionAI commands, listens to events for HUD feedback</li>
+            <li><strong>BottleProjectile.cs</strong> physics projectile, parabolic arc, target leading, collision + break effects</li>
+            <li><strong>LootSpot.cs</strong> scene loot node, weighted random table, depletion tracking</li>
+          </ul>
+        </div>
+
+        <div class="tech-block">
+          <div class="tech-h">Things worth noting</div>
+          <ul class="tech-list">
+            <li><strong>Follow anchor</strong> placed behind the player along their smoothed velocity direction, not a fixed offset. Fixes the classic "companion locks in front of you" problem.</li>
+            <li><strong>Action lock coroutine</strong> a shared bool blocks locomotion animator writes during one-shot clips (throw, react). Without this the companion slides into the throw pose mid-animation.</li>
+            <li><strong>Loot table per LootSpot</strong> each spot has its own weighted table in the Inspector, with the global table as fallback. Designers tune individual spots without touching code.</li>
+            <li><strong>Static events</strong> five C# Actions on CompanionAI. Input and HUD subscribe independently, no scene wiring needed.</li>
+          </ul>
+        </div>
+
+        <div class="tech-block">
+          <div class="tech-h">Public Command API</div>
+          <ul class="tech-list">
+            <li><strong>CommandFollow()</strong> force return to Follow from any state</li>
+            <li><strong>CommandHide()</strong> move to nearest hiding spot</li>
+            <li><strong>CommandClear()</strong> exit Hiding or Fleeing, return to Follow</li>
+            <li><strong>CommandThrowBottle()</strong> throw at nearest zombie, silent no-op if invalid</li>
+            <li><strong>CommandScavenge()</strong> move to nearest loot spot</li>
+            <li><strong>HealCompanion(float amount)</strong> add HP, clamped to maxHealth</li>
+            <li><strong>GiveBottles(int count)</strong> add bottles, clamped to maxBottleCount</li>
+          </ul>
+        </div>
+
+        <div class="tech-block">
+          <div class="tech-h">Events Fired</div>
+          <ul class="tech-list">
+            <li><strong>OnZombieSpotted</strong> Action&lt;Transform&gt;, fires when first zombie enters perception radius</li>
+            <li><strong>OnCompanionDied</strong> Action, fires when health reaches 0</li>
+            <li><strong>OnItemScavenged</strong> Action&lt;string&gt;, fires on loot pick completion, passes item name</li>
+            <li><strong>OnBottleThrown</strong> Action&lt;int&gt;, fires on launch, passes remaining count</li>
+            <li><strong>OnBottlesEmpty</strong> Action, fires when last bottle is used</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- STATE MACHINE TAB -->
+      <div class="tab-pane" id="tab-states">
+
+        <div class="tech-block">
+          <div class="tech-h">Seven States</div>
+          <p class="tech-p">Transitions happen on player commands, proximity checks, and damage events not polled externally.</p>
+        </div>
+
+        <table class="state-table">
+          <thead>
+            <tr><th>State</th><th>Entry</th><th>Behaviour</th><th>Exit</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Follow</td>
+              <td>Default / CommandFollow()</td>
+              <td>Trails player via velocity anchor. Idles and wanders locally when player is stationary.</td>
+              <td>Any command, or damage while zombies are nearby</td>
+            </tr>
+            <tr>
+              <td>MovingToHide</td>
+              <td>CommandHide()</td>
+              <td>Sprints to nearest hiding spot at hideRunSpeed.</td>
+              <td>Arrives within hideArrivalRadius → Hiding</td>
+            </tr>
+            <tr>
+              <td>Hiding</td>
+              <td>Arrival at hide spot</td>
+              <td>Crouches, immune to zombie detection.</td>
+              <td>CommandClear() or CommandFollow()</td>
+            </tr>
+            <tr>
+              <td>Fleeing</td>
+              <td>Hit by zombie + fleeZombieThreshold nearby</td>
+              <td>Sprints to a sampled NavMesh point away from threat cluster, then crouches.</td>
+              <td>CommandClear()</td>
+            </tr>
+            <tr>
+              <td>MovingToScavenge</td>
+              <td>CommandScavenge()</td>
+              <td>Walks to nearest LootSpot. Aborts if zombie enters alertScanRadius.</td>
+              <td>Arrives at spot → Scavenging; zombie spotted → Follow</td>
+            </tr>
+            <tr>
+              <td>Scavenging</td>
+              <td>Arrival at LootSpot</td>
+              <td>Waits scavengeDuration seconds, then calls LootSpot.Loot().</td>
+              <td>Timer expires → Follow</td>
+            </tr>
+            <tr>
+              <td>Dead</td>
+              <td>Health reaches 0</td>
+              <td>Terminal. No transitions out. OnCompanionDied fires.</td>
+              <td>None</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="tech-block">
+          <div class="tech-h">Follow Anchor</div>
+          <p class="tech-p">Each frame, the player's position delta is blended into <code>_smoothVelocityDir</code> via Vector3.Slerp. The companion targets a point behind the player along that direction, with a lateral offset to keep her out of the shooting line.</p>
+          <p class="tech-p">During sprinting, the lateral offset fades to zero and she trails directly behind. If she gets too close, a push-back kicks in. The result is she sits just behind your shoulder close enough to feel present, out of the way when it matters.</p>
+          <div class="code-block">behindDir = -_smoothVelocityDir
+moveRight = Cross(Vector3.up, _smoothVelocityDir)
+anchor = player.pos + behindDir * activeDistance + moveRight * activeLateral</div>
+        </div>
+
+      </div>
+
+      <!-- TECHNICAL TAB -->
+      <div class="tab-pane" id="tab-tech">
+
+        <div class="tech-block">
+          <div class="tech-h">Bottle Arc</div>
+          <p class="tech-p">CalculateArcVelocity() works out the exact initial velocity to hit the target in a single parabolic arc. The peak is measured above whichever endpoint is higher so it clears geometry regardless of the height difference between thrower and target.</p>
+          <div class="code-block">peakY = Max(start.y, end.y) + arcHeight
+timeToPeak = Sqrt(2 * riseH / gravity)
+timeToLand = Sqrt(2 * fallH / gravity)
+velXZ = dispXZ / totalTime
+velY = gravity * timeToPeak</div>
+          <p class="tech-p">Rigidbody drag is forced to 0 before launch any drag makes the bottle fall short. Angular drag (0.05) stays on for a natural spin.</p>
+        </div>
+
+        <div class="tech-block">
+          <div class="tech-h">Throw Safety</div>
+          <p class="tech-p">CommandThrowBottle() does nothing if the companion is dead, hiding, out of bottles, on cooldown, or no zombie is in range. If all checks pass: play the throw animation, lock locomotion so she doesn't slide mid-throw, spawn the projectile, decrement bottle count.</p>
+        </div>
+
+        <div class="tech-block">
+          <div class="tech-h">Collision & Startle</div>
+          <p class="tech-p">Both OnCollisionEnter and OnTriggerEnter call the same handler, which deals damage and calls ZombieAI.NotifyStartle() treated as a mid-priority distraction. Break particles and audio are detached before the GameObject is destroyed so they finish playing after it's gone.</p>
+        </div>
+
+        <div class="tech-block">
+          <div class="tech-h">Loot</div>
+          <ul class="tech-list">
+            <li>Each LootSpot has a weighted table a weight-5 item is five times as likely as weight-1. CommandScavenge() finds the nearest non-depleted spot via OverlapSphere, waits the scavenge timer, then calls Loot().</li>
+            <li>Any zombie entering the scan radius during transit cancels the scavenge.</li>
+            <li>In the Scene view, LootSpots show a wire cube and remaining picks ("2/3" or "DEPLETED") useful for level design without selecting every spot.</li>
+          </ul>
+        </div>
+
+        <div class="tech-block">
+          <div class="tech-h">Perception</div>
+          <p class="tech-p">CR_ZombieAlertScan() runs every 0.8s. It does an OverlapSphere, filters by line-of-sight from eye height, and keeps a HashSet of known zombies. Dead ones are pruned each pass. Perception doesn't auto-trigger hiding it drives voice barks and the flee threshold check only.</p>
+        </div>
+
+        <div class="tech-block">
+          <div class="tech-h">Animator</div>
+          <p class="tech-p">DriveAnimator() runs at the end of every Update and sets locomotion bools but only if the action lock is inactive, so a throw or react clip won't get interrupted. One setup requirement: the 'React' Animator state needs its Tag set to 'React', and 'Throw' to 'ThrowBottle'. The lock coroutine polls the current tag to know when the clip has finished. Without those tags, the companion freezes after the first hit or throw.</p>
+        </div>
+
+      </div>
+
+      <!-- SKILLS TAB -->
+      <div class="tab-pane" id="tab-skills">
+        <div class="skills-grid">
+          <div class="skill-pill"><strong>State Machine Design</strong>7-state enum FSM with clean EnterState() transitions and per-state tick methods</div>
+          <div class="skill-pill"><strong>NavMesh Integration</strong>SetAgentDestination with NavMesh.SamplePosition, speed switching, arrival detection</div>
+          <div class="skill-pill"><strong>Physics and Math</strong>Parabolic arc velocity from first principles; target leading via agent velocity</div>
+          <div class="skill-pill"><strong>Event-Driven Architecture</strong>Static C# Actions decoupling AI, input, and HUD with no cross-references</div>
+          <div class="skill-pill"><strong>Unity Lifecycle Discipline</strong>OnEnable/OnDisable event sub/unsub, coroutine management, animator action locking</div>
+          <div class="skill-pill"><strong>Designer Tooling</strong>Inspector-exposed loot tables, weighted random, scene gizmos with live state labels</div>
+          <div class="skill-pill"><strong>Defensive Coding</strong>Null guards throughout, silent no-ops on invalid commands, NavMesh sampling fallbacks</div>
+          <div class="skill-pill"><strong>Singleton Pattern</strong>Globally accessible companion instance without scene coupling</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PROJECT NAV -->
+  <div class="window">
+    <div class="window-titlebar">
+      <span>🗂 Other Projects</span>
+      <div class="window-controls"><div class="win-btn">✕</div></div>
+    </div>
+    <div class="window-body">
+      <div class="project-nav">
+        <a class="nav-proj-btn" href="zombie.html">
+          <span>←</span>
+          <span><span class="proj-label">Previous Project</span><span class="proj-name">Advanced Zombie AI</span></span>
+        </a>
+        <a class="nav-proj-btn" href="index.html" style="flex:0;min-width:auto;padding:12px 24px;">All Projects</a>
+        <a class="nav-proj-btn next" href="brothers.html">
+          <span><span class="proj-label">Next Project</span><span class="proj-name">Brothers on the Hill</span></span>
+          <span>→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="taskbar">
+  <a href="index.html" class="taskbar-btn">🪟 Start</a>
+  <div class="taskbar-btn">🤝 Companion AI</div>
+  <div class="taskbar-clock" id="clock"></div>
+</div>
+
+<script>
+  function switchTab(btn, paneId) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(paneId).classList.add('active');
+  }
+  function updateClock() {
+    document.getElementById('clock').textContent =
+      new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+</script>
+</body>
+</html>
