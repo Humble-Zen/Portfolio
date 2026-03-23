@@ -31,7 +31,7 @@
     min-height: 100vh;
   }
 
-  /* ── TASKBAR ── */
+  /* TASKBAR */
   .taskbar {
     position: fixed;
     bottom: 0; left: 0; right: 0;
@@ -67,7 +67,7 @@
     font-size: 14px;
   }
 
-  /* ── DESKTOP / HERO ── */
+  /* DESKTOP / HERO */
   .desktop {
     min-height: 100vh;
     display: flex;
@@ -77,7 +77,7 @@
     padding: 60px 24px 80px;
   }
 
-  /* ── WINDOW CHROME ── */
+  /* WINDOW CHROME */
   .window {
     background: var(--surface);
     border: 2px solid;
@@ -119,7 +119,7 @@
     padding: 28px 32px 32px;
   }
 
-  /* ── HERO CONTENT ── */
+  /* HERO CONTENT */
   .hero-name {
     font-size: clamp(36px, 6vw, 60px);
     font-weight: 900;
@@ -187,7 +187,7 @@
     display: inline-block;
   }
 
-  /* ── SCROLL HINT ── */
+  /* SCROLL HINT */
   .scroll-hint {
     margin-top: 48px;
     text-align: center;
@@ -205,7 +205,7 @@
     50% { transform: translateY(6px); }
   }
 
-  /* ── SECTION DIVIDER ── */
+  /* SECTION DIVIDER */
   .section-window {
     background: var(--surface);
     border: 2px solid;
@@ -216,7 +216,7 @@
     width: calc(100% - 48px);
   }
 
-  /* ── PROJECTS SECTION ── */
+  /* PROJECTS SECTION */
   #projects {
     padding: 60px 24px 100px;
   }
@@ -329,39 +329,211 @@
     color: var(--text-muted);
   }
 
-  /* ── CLOCK ── */
+  /* CLOCK */
   #clock { font-family: var(--font); }
+
+  /* DESKTOP TWO-WINDOW LAYOUT */
+  .desktop-windows {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+    max-width: 1100px;
+    align-items: flex-start;
+  }
+  .desktop-windows .window {
+    flex: 1;
+    max-width: 540px;
+  }
+  .council-window {
+    flex: 1;
+    max-width: 500px;
+  }
+
+  /* COUNCIL WINDOW */
+  .council-role {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .council-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin-bottom: 18px;
+  }
+  .council-event-highlight {
+    background: var(--bg);
+    border: 2px solid;
+    border-color: #fff #999 #999 #fff;
+    margin-bottom: 14px;
+    overflow: hidden;
+  }
+  .council-event-img img {
+    width: 100%;
+    display: block;
+    aspect-ratio: 16/7;
+    object-fit: cover;
+    object-position: center top;
+  }
+  .council-event-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding: 10px 14px 2px;
+  }
+  .council-event-title {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--text);
+    padding: 0 14px 6px;
+  }
+  .council-event-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    padding: 0 14px 12px;
+  }
+  .council-event-stats {
+    display: flex;
+    border-top: 1px solid var(--border-dark);
+  }
+  .council-stat {
+    flex: 1;
+    padding: 10px 8px;
+    border-right: 1px solid var(--border-dark);
+    text-align: center;
+  }
+  .council-stat:last-child { border-right: none; }
+  .council-stat-num {
+    display: block;
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--win-title);
+    line-height: 1;
+    margin-bottom: 3px;
+  }
+  .council-stat-label {
+    display: block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .council-other-events { margin-top: 4px; }
+  .council-other-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .council-event-pills {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .council-pill {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    background: var(--bg);
+    border: 2px solid;
+    border-color: #fff #999 #999 #fff;
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 900px) {
+    .desktop-windows {
+      flex-direction: column;
+      align-items: center;
+    }
+    .desktop-windows .window,
+    .council-window {
+      max-width: 680px;
+      width: 100%;
+    }
+  }
 </style>
 </head>
 <body>
 
 <!-- HERO / DESKTOP -->
 <div class="desktop">
-  <div class="window">
-    <div class="window-titlebar">
-      <span>Ajeet Jaiswar</span>
-      <div class="window-controls">
-        <div class="win-btn">_</div>
-        <div class="win-btn">□</div>
-        <div class="win-btn">✕</div>
+  <div class="desktop-windows">
+    <div class="window">
+      <div class="window-titlebar">
+        <span>Ajeet Jaiswar</span>
+        <div class="window-controls">
+          <div class="win-btn">_</div>
+          <div class="win-btn">□</div>
+          <div class="win-btn">✕</div>
+        </div>
+      </div>
+      <div class="window-body">
+        <div class="hero-name">Ajeet Jaiswar</div>
+        <div class="hero-role">Game Developer · Unity · C# · Narrative Design</div>
+        <p class="hero-desc">
+          Final year B.Tech student in Electronics and Computer Engineering with a Minors in AR/VR. I make games because I love building AI systems that feel alive and stories that actually mean something.
+        </p>
+        <div class="hero-tags">
+          <span class="tag">Unity C#</span>
+          <span class="tag">AI Design</span>
+          <span class="tag">Narrative Design</span>
+        </div>
+        <div class="hero-links">
+          <a class="btn-primary" href="#projects">View My Projects ↓</a>
+          <a class="btn" href="mailto:ajeetabhimanyujaiswar@gmail.com">Contact Me</a>
+          <a class="btn" href="https://github.com/Humble-Zen" target="_blank">GitHub</a>
+          <a class="btn" href="https://humble-zen.itch.io/" target="_blank">itch.io</a>
+        </div>
       </div>
     </div>
-    <div class="window-body">
-      <div class="hero-name">Ajeet Jaiswar</div>
-      <div class="hero-role">Game Developer · Unity · C# · Narrative Design</div>
-      <p class="hero-desc">
-        Final year B.Tech student in Electronics and Computer Engineering with a Minors in AR/VR. I make games because I love building AI systems that feel alive and stories that actually mean something.
-      </p>
-      <div class="hero-tags">
-        <span class="tag">Unity C#</span>
-        <span class="tag">AI Design</span>
-        <span class="tag">Narrative Design</span>
+
+    <!-- COUNCIL WINDOW -->
+    <div class="window council-window">
+      <div class="window-titlebar">
+        <span>🏛 ECESA · Creative Head</span>
+        <div class="window-controls">
+          <div class="win-btn">_</div>
+          <div class="win-btn">□</div>
+          <div class="win-btn">✕</div>
+        </div>
       </div>
-      <div class="hero-links">
-        <a class="btn-primary" href="#projects">View My Projects ↓</a>
-        <a class="btn" href="/cdn-cgi/l/email-protection#bddcd7d8d8c9dcdfd5d4d0dcd3c4c8d7dcd4cecadccffddad0dcd4d193ded2d0">Contact Me</a>
-        <a class="btn" href="https://github.com/Humble-Zen" target="_blank">GitHub</a>
-        <a class="btn" href="https://humble-zen.itch.io/" target="_blank">itch.io</a>
+      <div class="window-body">
+        <div class="council-role">Electronics and Computer Engineering Students Association</div>
+        <p class="council-desc">Served as Creative Head on the student council. Responsible for the design, branding, and execution side of department events — posters, stage setups, social media, and whatever else needed doing.</p>
+
+        <div class="council-event-highlight">
+          <div class="council-event-img">
+            <img src="hackathon.png" alt="Agri-Tech Hackathon valedictory with team ECESA">
+          </div>
+          <div class="council-event-label">Highlight Event</div>
+          <div class="council-event-title">24hr Agri-Tech Hackathon</div>
+          <p class="council-event-desc">National level hackathon hosted by K.J. Somaiya School of Engineering. Over 1,200 teams applied from across India, 300 were shortlisted for the actual event. 24 hours, three jury rounds, Rs. 2 lakhs in prizes. Covered by Times ascent.</p>
+          <div class="council-event-stats">
+            <div class="council-stat"><span class="council-stat-num">1200+</span><span class="council-stat-label">Teams Applied</span></div>
+            <div class="council-stat"><span class="council-stat-num">300</span><span class="council-stat-label">Shortlisted</span></div>
+            <div class="council-stat"><span class="council-stat-num">24hrs</span><span class="council-stat-label">Duration</span></div>
+            <div class="council-stat"><span class="council-stat-num">National</span><span class="council-stat-label">Level</span></div>
+          </div>
+        </div>
+
+        <div class="council-other-events">
+          <div class="council-other-label">Other Events</div>
+          <div class="council-event-pills">
+            <span class="council-pill">🥽 VR Workshop</span>
+            <span class="council-pill">🎨 Creative Events</span>
+            <span class="council-pill">📢 Department Fests</span>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -405,7 +577,7 @@
         <div class="card-dot"></div>
       </div>
       <div class="card-thumb">
-        <div class="card-thumb-placeholder">🤝</div>
+        <img src="followgif.gif" alt="companion">
       </div>
       <div class="card-body">
         <div class="card-label">Unity · AI · State Machine · Physics</div>
@@ -516,10 +688,11 @@
   <div class="taskbar-clock" id="clock"></div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   function updateClock() {
     const now = new Date();
-    document.getElementById('clock').textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    document.getElementById('clock').textContent =
+      now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   }
   updateClock();
   setInterval(updateClock, 1000);

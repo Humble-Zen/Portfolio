@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Companion AI Ajeet Jaiswar</title>
+<title>Companion AI — Ajeet Jaiswar</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0;}
   :root{
@@ -71,6 +71,15 @@
 
   .code-block{background:#0d0d0d;border:1px solid var(--border-dark);padding:14px 18px;font-family:monospace;font-size:14px;color:#b0c4de;line-height:1.7;margin-bottom:16px;overflow-x:auto;}
 
+  .gif-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:4px;}
+  .gif-item{background:#111;border:2px solid;border-color:#999 #fff #fff #999;overflow:hidden;}
+  .gif-item.wide{grid-column:1 / -1;}
+  .gif-item img{width:100%;display:block;object-fit:cover;}
+  .gif-caption{padding:8px 12px;font-size:13px;font-weight:600;color:var(--text-muted);background:var(--bg);border-top:1px solid var(--border-dark);}
+  .gif-section-label{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;margin-top:24px;}
+  .gif-section-label:first-child{margin-top:0;}
+  @media(max-width:600px){.gif-grid{grid-template-columns:1fr;}.gif-item.wide{grid-column:auto;}}
+
   .project-nav{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
   .nav-proj-btn{background:var(--bg);border:2px solid;border-color:#fff #999 #999 #fff;padding:12px 20px;font-size:15px;font-weight:600;font-family:var(--font);cursor:pointer;text-decoration:none;color:var(--text);display:flex;align-items:center;gap:8px;flex:1;min-width:180px;}
   .nav-proj-btn:active{border-color:#999 #fff #fff #999;}
@@ -106,12 +115,12 @@
     <div class="window-body">
       <div class="hero-meta">Unity · C# · NavMesh · State Machine · Physics Projectile · Loot System</div>
       <div class="hero-title">Companion AI</div>
-      <p class="hero-sub">A survivor companion for a third-person zombie game. She follows you, hides when you tell her to, throws bottles, and scavenges supplies all from a 7-state FSM across 4 scripts. Built so adding new commands doesn't mean touching existing ones.</p>
+      <p class="hero-sub">A modular survivor companion for a third-person zombie game. Follow behaviour, hiding, autonomous fleeing, bottle throwing, and scavenging all driven by a clean state machine and a decoupled event layer. Four scripts, no tight coupling between them.</p>
       <div class="stat-row">
         <div class="stat"><div class="stat-num">4</div><div class="stat-label">Scripts</div></div>
         <div class="stat"><div class="stat-num">7</div><div class="stat-label">AI States</div></div>
         <div class="stat"><div class="stat-num">5</div><div class="stat-label">C# Events</div></div>
-        <div class="stat"><div class="stat-num">7</div><div class="stat-label">Commands</div></div>
+        <div class="stat"><div class="stat-num">0</div><div class="stat-label">Tight Coupling</div></div>
       </div>
     </div>
   </div>
@@ -128,32 +137,71 @@
 
       <div class="tab-bar">
         <button class="tab active" onclick="switchTab(this,'tab-overview')">Overview</button>
+        <button class="tab" onclick="switchTab(this,'tab-gameplay')">Gameplay</button>
         <button class="tab" onclick="switchTab(this,'tab-states')">State Machine</button>
         <button class="tab" onclick="switchTab(this,'tab-tech')">Technical</button>
         <button class="tab" onclick="switchTab(this,'tab-skills')">Skills</button>
+      </div>
+
+      <!-- GAMEPLAY TAB -->
+      <div class="tab-pane" id="tab-gameplay">
+
+        <div class="gif-section-label">States in Action</div>
+
+        <div class="gif-grid">
+
+          <div class="gif-item wide">
+            <img src="followgif.gif" alt="Follow state">
+            <div class="gif-caption">Follow state. The companion trails behind the player along their movement direction, staying out of the shooting line.</div>
+          </div>
+
+          <div class="gif-item">
+            <img src="hidinggif.gif" alt="Hiding state">
+            <div class="gif-caption">Hiding state. On CommandHide() she sprints to the nearest hiding spot and crouches. Immune to zombie detection while hidden.</div>
+          </div>
+
+          <div class="gif-item">
+            <img src="cleargif.gif" alt="Clear state">
+            <div class="gif-caption">CommandClear(). She exits the hiding spot and returns to Follow. Player confirms the area is safe.</div>
+          </div>
+
+          <div class="gif-item">
+            <img src="Scavenginggif.gif" alt="Scavenging state">
+            <div class="gif-caption">Scavenging state. On CommandScavenge() she walks to the nearest LootSpot, waits the scavenge timer, then returns with supplies.</div>
+          </div>
+
+          <div class="gif-item">
+            <img src="fleeinggif.gif" alt="Fleeing state">
+            <div class="gif-caption">Fleeing state. After taking a hit with enough zombies nearby, she sprints to a sampled NavMesh point away from the threat cluster.</div>
+          </div>
+
+        </div>
+
       </div>
 
       <!-- OVERVIEW TAB -->
       <div class="tab-pane active" id="tab-overview">
 
         <div class="tech-block">
-          <div class="tech-h">How it's structured</div>
-          <p class="tech-p"><strong>CompanionAI</strong> is the central script. Everything else either calls its public command methods or subscribes to its events no script holds a direct reference to another.</p>
+          <div class="tech-h">Architecture</div>
+          <p class="tech-p"><strong>CompanionAI</strong> is the single source of truth. All other scripts either call its public command methods or subscribe to its static events. Neither holds a direct reference to the other.</p>
           <ul class="tech-list">
-            <li><strong>CompanionAI.cs</strong> state machine, NavMesh movement, perception, all commands</li>
-            <li><strong>CompanionInputHandler.cs</strong> maps keybinds to CompanionAI commands, listens to events for HUD feedback</li>
-            <li><strong>BottleProjectile.cs</strong> physics projectile, parabolic arc, target leading, collision + break effects</li>
-            <li><strong>LootSpot.cs</strong> scene loot node, weighted random table, depletion tracking</li>
+            <li><strong>CompanionAI.cs</strong> core state machine, NavMesh movement, perception, all commands</li>
+            <li><strong>CompanionInputHandler.cs</strong> input bridge, maps keybinds to CompanionAI commands, subscribes to events for HUD feedback</li>
+            <li><strong>BottleProjectile.cs</strong> physics projectile, parabolic arc, target leading, collision, break effects</li>
+            <li><strong>LootSpot.cs</strong> scene loot node, weighted random table, pick tracking, visual props, depletion events</li>
           </ul>
         </div>
 
         <div class="tech-block">
-          <div class="tech-h">Things worth noting</div>
+          <div class="tech-h">Design Patterns Used</div>
           <ul class="tech-list">
-            <li><strong>Follow anchor</strong> placed behind the player along their smoothed velocity direction, not a fixed offset. Fixes the classic "companion locks in front of you" problem.</li>
-            <li><strong>Action lock coroutine</strong> a shared bool blocks locomotion animator writes during one-shot clips (throw, react). Without this the companion slides into the throw pose mid-animation.</li>
-            <li><strong>Loot table per LootSpot</strong> each spot has its own weighted table in the Inspector, with the global table as fallback. Designers tune individual spots without touching code.</li>
-            <li><strong>Static events</strong> five C# Actions on CompanionAI. Input and HUD subscribe independently, no scene wiring needed.</li>
+            <li><strong>Singleton</strong> CompanionAI.Instance, one companion per scene, globally accessible without scene-coupling</li>
+            <li><strong>State Machine</strong> CompanionState enum with EnterState() transitions and per-state Tick_ methods, easy to extend without touching existing states</li>
+            <li><strong>Observer (Event-Driven)</strong> five static C# Actions on CompanionAI; CompanionInputHandler and HUD scripts subscribe independently, no references needed</li>
+            <li><strong>Velocity-Based Follow Anchor</strong> anchor placed behind the player along their smoothed velocity direction (not companion-relative offset); fixes the common 'locked in front' bug</li>
+            <li><strong>Action Lock Coroutine</strong> a shared bool (_actionLock) blocks locomotion animator writes during one-shot clips (throw, react), preventing the sliding-in-flinch-pose bug</li>
+            <li><strong>ScriptableObject-style Loot</strong> LootSpot owns its own weighted loot table per instance, falling back to CompanionAI's global table; designers tune each spot in the Inspector</li>
           </ul>
         </div>
 
@@ -188,7 +236,7 @@
 
         <div class="tech-block">
           <div class="tech-h">Seven States</div>
-          <p class="tech-p">Transitions happen on player commands, proximity checks, and damage events not polled externally.</p>
+          <p class="tech-p">Transitions are driven by player commands, proximity checks, and damage events never polled externally.</p>
         </div>
 
         <table class="state-table">
@@ -242,11 +290,11 @@
         </table>
 
         <div class="tech-block">
-          <div class="tech-h">Follow Anchor</div>
-          <p class="tech-p">Each frame, the player's position delta is blended into <code>_smoothVelocityDir</code> via Vector3.Slerp. The companion targets a point behind the player along that direction, with a lateral offset to keep her out of the shooting line.</p>
-          <p class="tech-p">During sprinting, the lateral offset fades to zero and she trails directly behind. If she gets too close, a push-back kicks in. The result is she sits just behind your shoulder close enough to feel present, out of the way when it matters.</p>
+          <div class="tech-h">Follow Anchor System</div>
+          <p class="tech-p">The anchor is the world-space position the companion navigates toward in the Follow state. Each frame, player position delta is blended into _smoothVelocityDir using Vector3.Slerp with anchorBlendSpeed. The anchor is placed behind the player along the smoothed velocity direction with a perpendicular lateral offset.</p>
+          <p class="tech-p">During a sprint (speed > sprintThreshold), lateral offset fades to zero and trailing distance grows, keeping the companion directly behind and out of the shooting line. A hard push-back kicks in if the companion gets inside walkCatchUpRadius.</p>
           <div class="code-block">behindDir = -_smoothVelocityDir
-moveRight = Cross(Vector3.up, _smoothVelocityDir)
+moveRight = Cross(Vector3.up, _smoothVelocityDir)  // travel-relative, not camera-relative
 anchor = player.pos + behindDir * activeDistance + moveRight * activeLateral</div>
         </div>
 
@@ -256,43 +304,49 @@ anchor = player.pos + behindDir * activeDistance + moveRight * activeLateral</di
       <div class="tab-pane" id="tab-tech">
 
         <div class="tech-block">
-          <div class="tech-h">Bottle Arc</div>
-          <p class="tech-p">CalculateArcVelocity() works out the exact initial velocity to hit the target in a single parabolic arc. The peak is measured above whichever endpoint is higher so it clears geometry regardless of the height difference between thrower and target.</p>
+          <div class="tech-h">Parabolic Bottle Arc</div>
+          <p class="tech-p">CalculateArcVelocity() derives the exact initial velocity to hit the target in a single parabolic arc. arcHeight is measured above whichever endpoint is higher, so the arc reliably clears geometry regardless of height difference.</p>
           <div class="code-block">peakY = Max(start.y, end.y) + arcHeight
 timeToPeak = Sqrt(2 * riseH / gravity)
 timeToLand = Sqrt(2 * fallH / gravity)
 velXZ = dispXZ / totalTime
 velY = gravity * timeToPeak</div>
-          <p class="tech-p">Rigidbody drag is forced to 0 before launch any drag makes the bottle fall short. Angular drag (0.05) stays on for a natural spin.</p>
+          <p class="tech-p">Rigidbody drag is forced to 0 before launch any drag causes the trajectory to deviate and the bottle falls short. Angular drag (0.05) is left on for a natural-looking spin.</p>
         </div>
 
         <div class="tech-block">
-          <div class="tech-h">Throw Safety</div>
-          <p class="tech-p">CommandThrowBottle() does nothing if the companion is dead, hiding, out of bottles, on cooldown, or no zombie is in range. If all checks pass: play the throw animation, lock locomotion so she doesn't slide mid-throw, spawn the projectile, decrement bottle count.</p>
+          <div class="tech-h">Target Leading</div>
+          <p class="tech-p">The target position is offset by the zombie's NavMeshAgent velocity × targetLeadTime (0.25s default), with a Rigidbody fallback. This keeps throws accurate against moving targets.</p>
         </div>
 
         <div class="tech-block">
-          <div class="tech-h">Collision & Startle</div>
-          <p class="tech-p">Both OnCollisionEnter and OnTriggerEnter call the same handler, which deals damage and calls ZombieAI.NotifyStartle() treated as a mid-priority distraction. Break particles and audio are detached before the GameObject is destroyed so they finish playing after it's gone.</p>
+          <div class="tech-h">Bottle Throw Safety Checks</div>
+          <p class="tech-p">CommandThrowBottle() is a silent no-op if any of these are true: companion is dead or hiding, no bottles remain, cooldown has not expired, or no zombie is within bottleTargetRadius. If valid, it plays the ThrowBottle animator trigger, locks locomotion via the action-lock coroutine, spawns BottleProjectile, and decrements _bottles.</p>
         </div>
 
         <div class="tech-block">
-          <div class="tech-h">Loot</div>
+          <div class="tech-h">Collision and Startle</div>
+          <p class="tech-p">OnCollisionEnter and OnTriggerEnter both call owner.OnBottleHitZombie(), which deals damage and calls ZombieAI.NotifyStartle() treating the hit as a mid-priority distraction alert. Break particles and audio detach from the projectile before destruction so they finish playing after the GameObject is gone.</p>
+        </div>
+
+        <div class="tech-block">
+          <div class="tech-h">Loot System</div>
           <ul class="tech-list">
-            <li>Each LootSpot has a weighted table a weight-5 item is five times as likely as weight-1. CommandScavenge() finds the nearest non-depleted spot via OverlapSphere, waits the scavenge timer, then calls Loot().</li>
-            <li>Any zombie entering the scan radius during transit cancels the scavenge.</li>
-            <li>In the Scene view, LootSpots show a wire cube and remaining picks ("2/3" or "DEPLETED") useful for level design without selecting every spot.</li>
+            <li><strong>Weighted random table</strong> each LootSpot carries LootEntry (itemName, amount, weight). PickWeightedRandom() rolls proportionally; a weight-5 item is five times as likely as a weight-1 entry.</li>
+            <li><strong>Scavenge flow</strong> CommandScavenge() finds nearest non-depleted LootSpot via OverlapSphere. On arrival, scavengeTimer counts down. On expiry, LootSpot.Loot() is called, item name passed to OnItemScavenged, then returns to Follow.</li>
+            <li><strong>Abort on threat</strong> any zombie entering alertScanRadius during transit cancels the scavenge and returns to Follow.</li>
+            <li><strong>Scene gizmos</strong> LootSpots draw a wire cube and upward ray in Scene view, label shows remaining picks (e.g. '2/3 picks') or 'DEPLETED'. Useful for level design without selecting each spot individually.</li>
           </ul>
         </div>
 
         <div class="tech-block">
-          <div class="tech-h">Perception</div>
-          <p class="tech-p">CR_ZombieAlertScan() runs every 0.8s. It does an OverlapSphere, filters by line-of-sight from eye height, and keeps a HashSet of known zombies. Dead ones are pruned each pass. Perception doesn't auto-trigger hiding it drives voice barks and the flee threshold check only.</p>
+          <div class="tech-h">Perception and Alert Scan</div>
+          <p class="tech-p">CR_ZombieAlertScan() is a coroutine running on alertScanInterval (0.8s default). It does an OverlapSphere at alertScanRadius, filters by line-of-sight (Linecast against obstacleLayer from eye height), and populates _knownZombies, a HashSet&lt;Transform&gt; that pathfinder queries draw from. Dead zombies are removed each scan pass. The companion does not auto-hide on detection perception only drives voice barks and informs the flee threshold check.</p>
         </div>
 
         <div class="tech-block">
-          <div class="tech-h">Animator</div>
-          <p class="tech-p">DriveAnimator() runs at the end of every Update and sets locomotion bools but only if the action lock is inactive, so a throw or react clip won't get interrupted. One setup requirement: the 'React' Animator state needs its Tag set to 'React', and 'Throw' to 'ThrowBottle'. The lock coroutine polls the current tag to know when the clip has finished. Without those tags, the companion freezes after the first hit or throw.</p>
+          <div class="tech-h">Animator Contract</div>
+          <p class="tech-p">DriveAnimator() is called at the end of every Update. It sets locomotion bools based on agent speed, but only if _actionLock is false preventing overwrites mid-throw or mid-react. Critical setup: the 'React' Animator state must have its Tag set to 'React', and the 'Throw' state must have its Tag set to 'ThrowBottle'. The action-lock coroutine polls the current state tag to know when the clip has exited. Without these tags, the companion freezes after the first hit or throw.</p>
         </div>
 
       </div>

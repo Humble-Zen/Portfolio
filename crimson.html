@@ -2,47 +2,45 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A* Implementation Ajeet Jaiswar</title>
+<title>A* Implementation — Ajeet Jaiswar</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0;}
   :root{
-    --bg:#0d1117;
-    --surface:#1a1f2e;
-    --border:#30363d;
-    --border-dark:#484f58;
-    --accent:#58a6ff;
-    --accent-secondary:#79c0ff;
-    --text:#f0f6fc;
-    --text-muted:#95a5ad;
-    --win-title:#1f6feb;
+    --bg:#121212;
+    --surface:#1e1e1e;
+    --border:#2c2c2c;
+    --border-dark:#3a3a3a;
+    --accent:#4a90e2;
+    --text:#e0e0e0;
+    --text-muted:#b0b0b0;
+    --win-title:#3a6ea5;
     --font: 'Helvetica', sans-serif;
-    --shadow:2px 2px 0px #0d0d0d;
+    --shadow:2px 2px 0px #2c2c2c;
   }
   body{background:var(--bg);font-family:var(--font);font-size:17px;color:var(--text);line-height:1.65;padding-bottom:60px;}
 
   .navbar{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:2px solid;border-color:#fff #999 #999 #fff;box-shadow:0 2px 0 var(--border-dark);display:flex;align-items:center;padding:8px 24px;gap:12px;}
-  .nav-back{background:var(--surface);border:2px solid;border-color:#fff #999 #999 #fff;padding:6px 16px;font-family:var(--font);font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;color:var(--text);transition:all 0.15s ease;}
-  .nav-back:hover{background:#232d3f;color:var(--accent);}
+  .nav-back{background:var(--surface);border:2px solid;border-color:#fff #999 #999 #fff;padding:6px 16px;font-family:var(--font);font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;color:var(--text);}
   .nav-back:active{border-color:#999 #fff #fff #999;}
   .nav-title{font-size:15px;font-weight:700;color:var(--text-muted);}
   .nav-sep{color:var(--border-dark);}
 
   .window{background:var(--surface);border:2px solid;border-color:#fff #999 #999 #fff;box-shadow:var(--shadow);}
-  .window-titlebar{background:linear-gradient(180deg,var(--win-title) 0%,#164ebf 100%);color:#fff;padding:6px 12px;display:flex;align-items:center;justify-content:space-between;font-size:14px;font-weight:bold;user-select:none;}
+  .window-titlebar{background:var(--win-title);color:#fff;padding:6px 12px;display:flex;align-items:center;justify-content:space-between;font-size:14px;font-weight:bold;user-select:none;}
   .window-controls{display:flex;gap:4px;}
   .win-btn{width:18px;height:16px;background:var(--bg);border:2px solid;border-color:#fff #999 #999 #fff;font-size:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
   .window-body{padding:28px 32px;}
 
   .page-wrap{max-width:900px;margin:0 auto;padding:32px 24px;display:flex;flex-direction:column;gap:28px;}
 
-  .hero-meta{font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent-secondary);margin-bottom:8px;}
+  .hero-meta{font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
   .hero-title{font-size:clamp(32px,5vw,52px);font-weight:900;letter-spacing:-1px;line-height:1.05;margin-bottom:12px;}
   .hero-sub{font-size:18px;color:var(--text-muted);margin-bottom:20px;line-height:1.6;}
 
   .stat-row{display:flex;flex-wrap:wrap;border:2px solid;border-color:#999 #fff #fff #999;}
   .stat{flex:1;min-width:100px;padding:14px 20px;border-right:1px solid var(--border-dark);background:var(--bg);}
   .stat:last-child{border-right:none;}
-  .stat-num{font-size:28px;font-weight:900;color:var(--accent);line-height:1;margin-bottom:4px;}
+  .stat-num{font-size:28px;font-weight:900;color:var(--win-title);line-height:1;margin-bottom:4px;}
   .stat-label{font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);}
 
   .tab-bar{display:flex;border-bottom:2px solid var(--border-dark);flex-wrap:wrap;}
@@ -51,14 +49,14 @@
   .tab-pane{display:none;padding-top:28px;}
   .tab-pane.active{display:block;}
 
-  .gif-section-label{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent-secondary);margin-bottom:12px;margin-top:24px;}
+  .gif-section-label{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;margin-top:24px;}
   .gif-section-label:first-child{margin-top:0;}
   .gif-item{background:#0a0a0a;border:2px solid;border-color:#999 #fff #fff #999;overflow:hidden;margin-bottom:4px;}
   .gif-item img{width:100%;display:block;}
   .gif-caption{padding:10px 14px;font-size:14px;font-weight:600;color:var(--text-muted);background:var(--surface);border-top:1px solid var(--border-dark);}
 
   .tech-block{margin-bottom:28px;}
-  .tech-h{font-size:16px;font-weight:800;text-transform:uppercase;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--border-dark);color:var(--accent);}
+  .tech-h{font-size:16px;font-weight:800;text-transform:uppercase;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--border-dark);color:var(--win-title);}
   .tech-p{font-size:17px;color:var(--text-muted);line-height:1.75;margin-bottom:10px;}
   .tech-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
   .tech-list li{font-size:17px;color:var(--text-muted);padding-left:20px;position:relative;line-height:1.65;}
@@ -72,8 +70,7 @@
   .skill-pill strong{display:block;color:var(--text);font-size:15px;margin-bottom:3px;}
 
   .project-nav{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
-  .nav-proj-btn{background:var(--bg);border:2px solid;border-color:#fff #999 #999 #fff;padding:12px 20px;font-size:15px;font-weight:600;font-family:var(--font);cursor:pointer;text-decoration:none;color:var(--text);display:flex;align-items:center;gap:8px;flex:1;min-width:180px;transition:all 0.15s ease;}
-  .nav-proj-btn:hover{background:#232d3f;color:var(--accent);}
+  .nav-proj-btn{background:var(--bg);border:2px solid;border-color:#fff #999 #999 #fff;padding:12px 20px;font-size:15px;font-weight:600;font-family:var(--font);cursor:pointer;text-decoration:none;color:var(--text);display:flex;align-items:center;gap:8px;flex:1;min-width:180px;}
   .nav-proj-btn:active{border-color:#999 #fff #fff #999;}
   .nav-proj-btn.next{justify-content:flex-end;text-align:right;}
   .proj-label{font-size:12px;font-weight:400;color:var(--text-muted);display:block;}
@@ -107,7 +104,7 @@
     <div class="window-body">
       <div class="hero-meta">Unity · C# · Algorithm · Custom Editor Tool</div>
       <div class="hero-title">A* Implementation</div>
-      <p class="hero-sub">Turn-based tactical prototype built around from-scratch A* pathfinding no NavMesh, no Unity pathfinding APIs. Also includes a custom Unity Editor tool so level designers can paint obstacles without writing any code.</p>
+      <p class="hero-sub">A turn-based tactical strategy prototype built entirely around from-scratch A* pathfinding no NavMesh, no Unity pathfinding APIs. The algorithm is the gameplay. Includes a custom Unity Editor tool so level designers can paint obstacles without writing a single line of code.</p>
       <div class="stat-row">
         <div class="stat"><div class="stat-num">17</div><div class="stat-label">Scripts</div></div>
         <div class="stat"><div class="stat-num">5</div><div class="stat-label">Subsystems</div></div>
@@ -128,6 +125,7 @@
       <div class="tab-bar">
         <button class="tab active" onclick="switchTab(this,'tab-gameplay')">Gameplay</button>
         <button class="tab" onclick="switchTab(this,'tab-tech')">Technical</button>
+        <button class="tab" onclick="switchTab(this,'tab-realgames')">Real Games</button>
         <button class="tab" onclick="switchTab(this,'tab-skills')">Skills</button>
       </div>
 
@@ -167,44 +165,79 @@
       <div class="tab-pane" id="tab-tech">
 
   <div class="tech-block">
-    <div class="tech-h">A* From Scratch</div>
-    <p class="tech-p"><strong>PathFinder</strong> is a plain C# class with no MonoBehaviour dependency. It can be tested, ported, or called from anywhere.</p>
+    <div class="tech-h">A* Algorithm Built From Scratch</div>
+    <p class="tech-p"><strong>PathFinder</strong> is a plain C# class, fully decoupled from MonoBehaviour. No Unity lifecycle dependency. It can be unit tested, ported, or called from any context.</p>
     <ul class="tech-list">
-      <li><strong>FindPath() resets all node costs before each search</strong> stale g/h/f values from a previous call won't corrupt the result.</li>
-      <li>Open set is a <strong>List&lt;Node&gt;</strong> sorted by f cost. Closed set is a <strong>HashSet&lt;Node&gt;</strong> for O(1) membership checks.</li>
-      <li>Path is reconstructed by walking parent references from goal back to start, then reversing.</li>
+      <li><strong>FindPath() resets all node costs before each search</strong>, prevents stale g, h, f values from a previous search corrupting results.</li>
+      <li>Open set <strong>List&lt;Node&gt;</strong> sorted by f cost. Closed set <strong>HashSet&lt;Node&gt;</strong> for O(1) membership checks.</li>
+      <li>Path reconstructed by walking parent references from goal to start, then reversing.</li>
     </ul>
-    <div class="code-note">// Manhattan heuristic grid movement, no diagonals
+    <div class="code-note">// Manhattan heuristic, pure grid movement, no diagonals
 h = Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);</div>
   </div>
 
   <div class="tech-block">
-    <div class="tech-h">Editor Tool</div>
-    <p class="tech-p">Level designers can block tiles without touching code.</p>
+    <div class="tech-h">Custom Editor Tool ObstacleEditor</div>
+    <p class="tech-p">Level designers can paint the grid without touching code. The entire workflow is visual.</p>
     <ul class="tech-list">
-      <li><strong>ObstacleData ScriptableObject</strong> stores a flat <code>bool[]</code> array. x,y → index via <code>y * width + x</code>. Fully serializable, no jagged arrays.</li>
-      <li><strong>ObstacleEditor (EditorWindow)</strong> renders the grid as checkboxes. Click to block, click again to unblock. Saved via <strong>EditorUtility.SetDirty()</strong> persists across play sessions and into version control.</li>
-      <li>At runtime, <strong>ObstacleManager reads the same ScriptableObject</strong> and spawns prefabs at blocked positions. No data duplication.</li>
+      <li><strong>ObstacleData ScriptableObject</strong> stores a flat <code>bool[]</code> array. Coordinate x,y to index via <strong>y times width plus x</strong>. Avoids jagged arrays, fully serializable.</li>
+      <li><strong>ObstacleEditor (EditorWindow)</strong> renders a checkbox grid. Each checkbox equals one array index. Changes written via <strong>EditorUtility.SetDirty()</strong>, persists across play sessions and into version control.</li>
+      <li>At runtime, <strong>ObstacleManager reads the same ScriptableObject</strong> and spawns visual prefabs at blocked positions. Zero data duplication between editor and runtime.</li>
     </ul>
   </div>
 
   <div class="tech-block">
-    <div class="tech-h">Tile Occupancy</div>
+    <div class="tech-h">Tile Occupancy System</div>
     <ul class="tech-list">
-      <li><strong>Pre-reservation</strong> GridOccupant.Occupy() is called on the destination before the unit moves into it. Two units can't target the same tile.</li>
-      <li><strong>HashSet&lt;Vector2Int&gt;</strong> for O(1) checks. PathFinder queries it during neighbour generation so paths route around occupied tiles automatically.</li>
+      <li><strong>Pre reservation pattern</strong> GridOccupant.Occupy() is called on the destination tile before the unit steps into it, prevents two units from targeting the same tile.</li>
+      <li><strong>HashSet&lt;Vector2Int&gt; occupancy</strong> for O(1) tile checks. PathFinder queries it during neighbour generation, so paths route around occupied tiles dynamically.</li>
     </ul>
   </div>
 
   <div class="tech-block">
-    <div class="tech-h">Enemy AI</div>
-    <p class="tech-p">EnemyAI never polls in Update(). It subscribes to <code>PlayerControl.OnPlayerMovedEvent</code> in OnEnable and unsubscribes in OnDisable responds only when the player actually moves.</p>
+    <div class="tech-h">Event Driven Enemy AI</div>
+    <p class="tech-p">EnemyAI never polls in Update(). It subscribes to <code>PlayerControl.OnPlayerMovedEvent</code> static C# Action in OnEnable and unsubscribes in OnDisable.</p>
     <ul class="tech-list">
-      <li><strong>IAI interface</strong> with a single TakeTurn() method. Swap AI behaviour without touching the event wiring.</li>
+      <li><strong>IAI interface</strong> with a single <code>TakeTurn()</code> method, any AI behaviour can be swapped without touching the event wiring.</li>
+      <li>Satisfies the <strong>Open Closed Principle</strong>, the event system is closed for modification and open for new AI types.</li>
     </ul>
   </div>
 
 </div>
+
+      <!-- REAL GAMES TAB -->
+      <div class="tab-pane" id="tab-realgames">
+
+        <div class="tech-block">
+          <div class="tech-h">Games that actually use this</div>
+          <p class="tech-p">When I was building this I kept thinking about where I'd seen this kind of movement before. Turns out A* is basically everywhere.</p>
+        </div>
+
+        <div class="tech-block">
+          <div class="tech-h">The obvious ones</div>
+          <ul class="tech-list">
+            <li><strong>StarCraft</strong> — this is probably the most famous example. Units pathfind around each other and the terrain using A* on a tile grid. The original game had a notorious bug where large groups of units would stack on top of each other because two units could claim the same destination tile at the same time. That's literally the pre-reservation problem I solved in this project.</li>
+            <li><strong>Age of Empires II</strong> — the pathfinding in this game is notoriously weird sometimes. Villagers taking a very long way around a wall, or getting stuck. That's A* running into edge cases with large groups. They patched it for years. The Definitive Edition finally fixed most of it.</li>
+            <li><strong>XCOM Enemy Unknown</strong> — same genre as what I built. Every soldier move on every turn is A* on a tile grid. You can almost feel it working when a soldier plots a route through a building.</li>
+            <li><strong>Into the Breach</strong> — really interesting one because the whole game is designed around making the pathfinding readable. You can see exactly where every enemy wants to go before they move. The 8x8 grid is tiny enough that A* is basically instant.</li>
+          </ul>
+        </div>
+
+        <div class="tech-block">
+          <div class="tech-h">Less obvious but still A*</div>
+          <ul class="tech-list">
+            <li><strong>Minecraft</strong> — every mob runs A* on the block grid to find you. You can watch it happen in real time. Put a wall between you and a zombie and it will walk around it. That's the algorithm. Villagers use it to navigate between buildings.</li>
+            <li><strong>The Sims</strong> — every Sim pathfinds through your house with A*. The red diamond you get when a Sim can't reach something? That's A* returning no path found. Happens when you accidentally wall a Sim into a room.</li>
+            <li><strong>Diablo II</strong> — monsters chasing you are running A*. The ones that get stuck on corners are failing to account for their own collision size when calculating the path, classic A* edge case.</li>
+          </ul>
+        </div>
+
+        <div class="tech-block">
+          <div class="tech-h">Why it's everywhere</div>
+          <p class="tech-p">It finds the shortest path, it's fast enough for real-time games on small to medium grids, and it's not that hard to implement. Most other approaches are either slower, less accurate, or much harder to write. Once you understand it you start seeing it in basically every game with moving characters.</p>
+        </div>
+
+      </div>
 
       <!-- SKILLS TAB -->
       <div class="tab-pane" id="tab-skills">
