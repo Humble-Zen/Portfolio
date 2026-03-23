@@ -31,7 +31,7 @@
     min-height: 100vh;
   }
 
-  /* TASKBAR */
+  /* ── TASKBAR ── */
   .taskbar {
     position: fixed;
     bottom: 0; left: 0; right: 0;
@@ -67,7 +67,7 @@
     font-size: 14px;
   }
 
-  /* DESKTOP / HERO */
+  /* ── DESKTOP / HERO ── */
   .desktop {
     min-height: 100vh;
     display: flex;
@@ -77,7 +77,7 @@
     padding: 60px 24px 80px;
   }
 
-  /* WINDOW CHROME */
+  /* ── WINDOW CHROME ── */
   .window {
     background: var(--surface);
     border: 2px solid;
@@ -119,7 +119,7 @@
     padding: 28px 32px 32px;
   }
 
-  /* HERO CONTENT */
+  /* ── HERO CONTENT ── */
   .hero-name {
     font-size: clamp(36px, 6vw, 60px);
     font-weight: 900;
@@ -187,7 +187,7 @@
     display: inline-block;
   }
 
-  /* SCROLL HINT */
+  /* ── SCROLL HINT ── */
   .scroll-hint {
     margin-top: 48px;
     text-align: center;
@@ -205,7 +205,7 @@
     50% { transform: translateY(6px); }
   }
 
-  /* SECTION DIVIDER */
+  /* ── SECTION DIVIDER ── */
   .section-window {
     background: var(--surface);
     border: 2px solid;
@@ -216,7 +216,7 @@
     width: calc(100% - 48px);
   }
 
-  /* PROJECTS SECTION */
+  /* ── PROJECTS SECTION ── */
   #projects {
     padding: 60px 24px 100px;
   }
@@ -329,10 +329,10 @@
     color: var(--text-muted);
   }
 
-  /* CLOCK */
+  /* ── CLOCK ── */
   #clock { font-family: var(--font); }
 
-  /* DESKTOP TWO-WINDOW LAYOUT */
+  /* ── DESKTOP TWO-WINDOW LAYOUT ── */
   .desktop-windows {
     display: flex;
     gap: 16px;
@@ -349,7 +349,7 @@
     max-width: 500px;
   }
 
-  /* COUNCIL WINDOW */
+  /* ── COUNCIL WINDOW ── */
   .council-role {
     font-size: 12px;
     font-weight: 700;
@@ -374,9 +374,8 @@
   .council-event-img img {
     width: 100%;
     display: block;
-    aspect-ratio: 16/7;
-    object-fit: cover;
-    object-position: center top;
+    object-fit: contain;
+    background: #0a0a0a;
   }
   .council-event-label {
     font-size: 10px;
@@ -485,6 +484,7 @@
         <div class="hero-tags">
           <span class="tag">Unity C#</span>
           <span class="tag">AI Design</span>
+       
           <span class="tag">Narrative Design</span>
         </div>
         <div class="hero-links">
@@ -508,7 +508,7 @@
       </div>
       <div class="window-body">
         <div class="council-role">Electronics and Computer Engineering Students Association</div>
-        <p class="council-desc">Served as Creative Head on the student council. Responsible for the design, branding, and execution side of department events — posters, stage setups, social media, and whatever else needed doing.</p>
+        <p class="council-desc">Served as Creative Head on the student council. Responsible for the design, branding, and execution side of department events posters, stage setups, social media, and whatever else needed doing.</p>
 
         <div class="council-event-highlight">
           <div class="council-event-img">
@@ -516,7 +516,7 @@
           </div>
           <div class="council-event-label">Highlight Event</div>
           <div class="council-event-title">24hr Agri-Tech Hackathon</div>
-          <p class="council-event-desc">National level hackathon hosted by K.J. Somaiya School of Engineering. Over 1,200 teams applied from across India, 300 were shortlisted for the actual event. 24 hours, three jury rounds, Rs. 2 lakhs in prizes. Covered by Times ascent.</p>
+          <p class="council-event-desc">National level hackathon hosted by K.J. Somaiya School of Engineering. Over 1,200 teams applied from across India 300 were shortlisted for the actual event. 24 hours, three jury rounds, Rs. 2 lakhs in prizes. Covered by Indian Chemical News.</p>
           <div class="council-event-stats">
             <div class="council-stat"><span class="council-stat-num">1200+</span><span class="council-stat-label">Teams Applied</span></div>
             <div class="council-stat"><span class="council-stat-num">300</span><span class="council-stat-label">Shortlisted</span></div>
@@ -577,7 +577,7 @@
         <div class="card-dot"></div>
       </div>
       <div class="card-thumb">
-        <img src="followgif.gif" alt="companion">
+        <img src="followgif.gif" alt="follow">
       </div>
       <div class="card-body">
         <div class="card-label">Unity · AI · State Machine · Physics</div>
