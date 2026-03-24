@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advanced Zombie AI Ajeet Jaiswar</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0d1117;
+    --surface: #1a1f2e;
+    --border: #30363d;
+    --border-dark: #484f58;
+    --accent: #58a6ff;
+    --accent-secondary: #79c0ff;
+    --text: #f0f6fc;
+    --text-muted: #95a5ad;
+    --win-title: #1f6feb;
+    --shadow: 2px 2px 0px #0d0d0d;
+    --font: 'Helvetica', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 17px;
+    line-height: 1.65;
+    padding-bottom: 60px;
+  }
+
+  .navbar {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--surface);
+    border-bottom: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 8px 24px;
+    gap: 12px;
+  }
+  .nav-back {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    padding: 6px 16px;
+    font-family: var(--font);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s ease;
+  }
+  .nav-back:hover {
+    background: #232d3f;
+    color: var(--accent);
+  }
+  .nav-title { font-size: 15px; font-weight: 700; color: var(--text-muted); }
+  .nav-sep { color: var(--border-dark); }
+
+  .window {
+    background: var(--surface);
+    border: 2px solid var(--border);
+  }
+  .window-titlebar {
+    background: var(--win-title);
+    color: #fff;
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: bold;
+    user-select: none;
+  }
+  .window-controls { display: flex; gap: 4px; }
+  .win-btn {
+    width: 18px; height: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border-dark);
+    font-size: 10px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+  }
+  .window-body { padding: 28px 32px; }
+
+  .page-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .hero-meta {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent-secondary);
+    margin-bottom: 8px;
+  }
+  .hero-title {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 900;
+    letter-spacing: -1px;
+    line-height: 1.05;
+    margin-bottom: 12px;
+  }
+  .hero-sub {
+    font-size: 18px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  .stat-row {
+    display: flex;
+    gap: 0;
+    flex-wrap: wrap;
+    border: 2px solid var(--border);
+    margin-bottom: 4px;
+  }
+  .stat {
+    flex: 1;
+    min-width: 100px;
+    padding: 14px 20px;
+    border-right: 1px solid var(--border-dark);
+    background: var(--bg);
+  }
+  .stat:last-child { border-right: none; }
+  .stat-num {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .tab-bar {
+    display: flex;
+    border-bottom: 2px solid var(--border-dark);
+    gap: 0;
+  }
+  .tab {
+    padding: 10px 22px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-bottom: none;
+    background: var(--surface);
+    font-family: var(--font);
+    color: var(--text-muted);
+    position: relative;
+    bottom: -2px;
+  }
+  .tab.active {
+    background: var(--surface);
+    border-color: var(--border-dark);
+    color: var(--text);
+  }
+  .tab-pane { display: none; padding-top: 28px; }
+  .tab-pane.active { display: block; }
+
+  .gif-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 4px;
+  }
+  .gif-item {
+    background: #111;
+    border: 2px solid var(--border);
+    overflow: hidden;
+  }
+  .gif-item.wide { grid-column: 1 / -1; }
+  .gif-item video {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+  }
+  .gif-caption {
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+  }
+
+  .pull-quote {
+    background: var(--win-title);
+    color: #fff;
+    padding: 24px 28px;
+    margin: 4px 0;
+  }
+  .pull-quote-text {
+    font-size: clamp(18px, 3vw, 24px);
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 10px;
+  }
+  .pull-quote-text em { color: #99ccff; font-style: normal; }
+  .pull-quote-attr { font-size: 13px; opacity: 0.7; letter-spacing: 0.5px; }
+
+  .story-beat {
+    border-left: 4px solid var(--win-title);
+    padding: 16px 20px;
+    background: var(--bg);
+    margin-bottom: 12px;
+  }
+  .beat-tag {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .beat-text {
+    font-size: 17px;
+    color: var(--text);
+    line-height: 1.7;
+  }
+  .beat-text strong { color: var(--win-title); }
+
+  .state-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .state-chip {
+    background: var(--win-title);
+    color: #fff;
+    padding: 10px 14px;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .tech-block { margin-bottom: 28px; }
+  .tech-h {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border-dark);
+    color: var(--win-title);
+  }
+  .tech-p {
+    font-size: 17px;
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin-bottom: 10px;
+  }
+  .tech-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .tech-list li {
+    font-size: 17px;
+    color: var(--text-muted);
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.65;
+  }
+  .tech-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--win-title);
+    font-weight: 700;
+  }
+  .tech-list li strong { color: var(--text); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px;
+  }
+  .skill-pill {
+    padding: 12px 14px;
+    background: var(--bg);
+    border: 2px solid var(--border);
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+  .skill-pill strong {
+    display: block;
+    color: var(--text);
+    font-size: 15px;
+    margin-bottom: 3px;
+  }
+
+  .project-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .nav-proj-btn {
+    background: var(--bg);
+    border: 2px solid var(--border);
+    padding: 12px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: var(--font);
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 180px;
+  }
+
+  .nav-proj-btn.next { justify-content: flex-end; text-align: right; }
+  .nav-proj-btn .proj-label {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-muted);
+    display: block;
+  }
+  .nav-proj-btn .proj-name {
+    font-size: 16px;
+    font-weight: 700;
+    display: block;
+  }
+
+  .taskbar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 40px;
+    background: var(--bg);
+    border-top: 2px solid #fff;
+    box-shadow: 0 -1px 0 var(--border-dark);
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    gap: 8px;
+    z-index: 100;
+  }
+  .taskbar-btn {
+    background: var(--bg);
+    border: 2px solid var(--border);
+    padding: 4px 14px;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: var(--font);
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--text);
+  }
+  .taskbar-clock {
+    margin-left: auto;
+    border: 2px solid var(--border);
+    padding: 4px 12px;
+    font-size: 14px;
+  }
+
+  @media (max-width: 600px) {
+    .gif-grid { grid-template-columns: 1fr; }
+    .gif-item.wide { grid-column: auto; }
+    .stat-row { flex-direction: column; }
+    .window-body { padding: 20px 18px; }
+    .page-wrap { padding: 20px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <a class="nav-back" href="index.html">< Back</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-title">Advanced Zombie AI</span>
+</div>
+
+<div class="page-wrap">
+
+  <div class="window">
+    <div class="window-titlebar">
+      <span>Advanced Zombie AI Project Overview</span>
+      <div class="window-controls">
+        <div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn">✕</div>
+      </div>
+    </div>
+    <div class="window-body">
+      <div class="hero-meta">Unity · C# · NavMesh · State Machine</div>
+      <div class="hero-title">Advanced Zombie AI</div>
+      <p class="hero-sub">8-state enemy AI with tiered sound detection, squad alerting, player memory, and dynamic music crossfade. Built so the zombie isn't just chasing you it remembers where you were, and it told its friends.</p>
+      <div class="stat-row">
+        <div class="stat"><div class="stat-num">8</div><div class="stat-label">AI States</div></div>
+        <div class="stat"><div class="stat-num">6</div><div class="stat-label">Companion Scripts</div></div>
+        <div class="stat"><div class="stat-num">5</div><div class="stat-label">Sound Priorities</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="window">
+    <div class="window-titlebar">
+      <span>Project Files</span>
+      <div class="window-controls">
+        <div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn">✕</div>
+      </div>
+    </div>
+    <div class="window-body">
+
+      <div class="tab-bar">
+        <button class="tab active" onclick="switchTab(this,'tab-states')">States</button>
+        <button class="tab" onclick="switchTab(this,'tab-gameplay')">Gameplay</button>
+        <button class="tab" onclick="switchTab(this,'tab-tech')">Technical</button>
+        <button class="tab" onclick="switchTab(this,'tab-skills')">Skills</button>
+      </div>
+
+      <div class="tab-pane active" id="tab-states">
+
+        <div class="pull-quote">
+          <div class="pull-quote-text">"One zombie spots you. <em>The whole room knows immediately.</em> No sound. No warning. Just convergence."</div>
+          <div class="pull-quote-attr">Advanced Zombie AI Squad Alert System</div>
+        </div>
+
+        <div style="height:20px;"></div>
+
+        <div class="story-beat">
+          <div class="beat-tag">The 8 States</div>
+          <div class="beat-text">
+            <div class="state-grid" style="margin-top:8px;margin-bottom:16px;">
+              <div class="state-chip">Idle</div>
+              <div class="state-chip">Patrol</div>
+              <div class="state-chip">Chase</div>
+              <div class="state-chip">Standoff</div>
+              <div class="state-chip">Search</div>
+              <div class="state-chip">Attack</div>
+              <div class="state-chip">Feeding</div>
+              <div class="state-chip">Dead</div>
+            </div>
+            Every transition goes through <strong>ChangeState()</strong> it blocks re-entry, registers with the music manager, and resets timers for the new state.
+          </div>
+        </div>
+
+        <div class="story-beat">
+          <div class="beat-tag">The details that make it feel right</div>
+          <div class="beat-text">A <strong>wounded zombie</strong> (health below 50) locks into Chase permanently you can't shake it. The <strong>Linger state</strong> keeps it near your last known position for 20 seconds with sharper senses, so hiding in the same spot twice doesn't work. <strong>Standoff</strong> is just the zombie staring at where it thinks you are. And Feeding gives them something to do when you're not around they feel like they exist even when you're not looking.</div>
+        </div>
+
+        <div class="story-beat">
+          <div class="beat-tag">Squad Alerting</div>
+          <div class="beat-text">When one zombie spots you, <strong>Physics.OverlapSphere fires ReceiveSquadAlert()</strong> on nearby zombies and forces them straight into Chase no sound, no animation, no warning. You don't see it happen. You just notice they're all coming at once.</div>
+        </div>
+
+        <div class="story-beat">
+          <div class="beat-tag">Death</div>
+          <div class="beat-text">On death, <strong>isKinematic</strong> is disabled across all rigidbody components and a directional impulse is applied based on the hit vector. Zombies fall convincingly away from the source of damage.</div>
+        </div>
+
+      </div>
+
+      <div class="tab-pane" id="tab-gameplay">
+        <div class="gif-item wide" style="margin-bottom:12px;">
+          <div style="position:relative;width:100%;padding-top:56.25%;overflow:hidden;border-radius:inherit;"><iframe src="https://www.youtube.com/embed/JyXZCPbCsgg?autoplay=1&mute=1&loop=1&playlist=JyXZCPbCsgg&controls=0&rel=0&modestbranding=1&showinfo=0&iv_load_policy=3&disablekb=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;pointer-events:none;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
+          <div class="gif-caption">AI in Action</div>
+        </div>
+
+        <div class="gif-grid">
+          <div class="gif-item wide">
+            <div style="position:relative;width:100%;padding-top:56.25%;overflow:hidden;border-radius:inherit;"><iframe src="https://www.youtube.com/embed/NSc55Kw_oVM?autoplay=1&mute=1&loop=1&playlist=NSc55Kw_oVM&controls=0&rel=0&modestbranding=1&showinfo=0&iv_load_policy=3&disablekb=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;pointer-events:none;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
+            <div class="gif-caption">Sprint detected. The zombie abandons patrol and moves toward the sound source priority 2 on the alert bus.</div>
+          </div>
+
+          <div class="gif-item">
+            <div style="position:relative;width:100%;padding-top:56.25%;overflow:hidden;border-radius:inherit;"><iframe src="https://www.youtube.com/embed/2GWgQtI87bM?autoplay=1&mute=1&loop=1&playlist=2GWgQtI87bM&controls=0&rel=0&modestbranding=1&showinfo=0&iv_load_policy=3&disablekb=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;pointer-events:none;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
+            <div class="gif-caption">Distraction thrown from range. The zombie breaks patrol and navigates to the alert position.</div>
+          </div>
+
+          <div class="gif-item">
+            <div style="position:relative;width:100%;padding-top:56.25%;overflow:hidden;border-radius:inherit;"><iframe src="https://www.youtube.com/embed/YFzWIn-_Y-s?autoplay=1&mute=1&loop=1&playlist=YFzWIn-_Y-s&controls=0&rel=0&modestbranding=1&showinfo=0&iv_load_policy=3&disablekb=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;pointer-events:none;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
+            <div class="gif-caption">Close distraction. Larger search radius generated the zombie sweeps the area before returning.</div>
+          </div>
+
+          <div class="gif-item">
+            <div style="position:relative;width:100%;padding-top:56.25%;overflow:hidden;border-radius:inherit;"><iframe src="https://www.youtube.com/embed/f7KWLf0iIUw?autoplay=1&mute=1&loop=1&playlist=f7KWLf0iIUw&controls=0&rel=0&modestbranding=1&showinfo=0&iv_load_policy=3&disablekb=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;pointer-events:none;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
+            <div class="gif-caption">Feeding state. The zombie exists between encounters. Torch detection active intensity falls off by distance and angle.</div>
+          </div>
+
+          <div class="gif-item">
+            <div style="position:relative;width:100%;padding-top:56.25%;overflow:hidden;border-radius:inherit;"><iframe src="https://www.youtube.com/embed/hxxXVcwR0Xg?autoplay=1&mute=1&loop=1&playlist=hxxXVcwR0Xg&controls=0&rel=0&modestbranding=1&showinfo=0&iv_load_policy=3&disablekb=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;pointer-events:none;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
+            <div class="gif-caption">Ragdoll death. Directional impulse applied on hit vector the zombie falls away from the damage source.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane" id="tab-tech">
+
+        <div class="tech-block">
+          <div class="tech-h">Detection</div>
+          <ul class="tech-list">
+            <li><strong>Sight:</strong> two raycasts per frame one to torso, one to head. Either clear = visible. Torch detection uses a cone with an obstacle linecast and falls off by distance and angle.</li>
+            <li><strong>Sound:</strong> every sound source writes into <code>pendingAlertPriority</code> and <code>pendingAlertPos</code>. Update() reads them once per frame. Priority order: Walk → Sprint/Landing → Distraction → Gunshot → Explosion.</li>
+            <li><strong>Ground vibration</strong> goes direct via OverlapSphere can't be blocked by walls, ignores the sound bus entirely.</li>
+          </ul>
+        </div>
+
+        <div class="tech-block">
+          <div class="tech-h">Search & Memory</div>
+          <ul class="tech-list">
+            <li>BeginSearch() generates NavMesh-validated waypoints more of them, wider spread, if the zombie was in a high-confidence chase.</li>
+            <li>Three anti-stuck layers: per-frame distance accumulator, 8s waypoint timeout, 12s total search cap. It doesn't just stand there.</li>
+            <li><strong>ScanPauseAtWaypoint()</strong> stops the agent mid-path and rotates it 45° left and right. Looks like it's actually checking the room.</li>
+            <li><strong>LKP snaps on the exact frame sight is lost</strong> so the position it remembers is always the freshest one.</li>
+          </ul>
+        </div>
+
+        <div class="tech-block">
+          <div class="tech-h">Music</div>
+          <p class="tech-p"><strong>ZombieMusicManager</strong> counts active chasers. Chase music kicks in above the threshold (5 zombies). There's a 2.5s grace period before it fades back out enough time that it doesn't stutter if you immediately re-engage.</p>
+        </div>
+
+      </div>
+
+      <div class="tab-pane" id="tab-skills">
+        <div class="skills-grid">
+          <div class="skill-pill"><strong>Finite State Machine</strong>8 states, guarded ChangeState(), re-entry prevention</div>
+          <div class="skill-pill"><strong>NavMesh Pathfinding</strong>Dynamic destinations, SamplePosition validation</div>
+          <div class="skill-pill"><strong>Event Architecture</strong>Static C# event bus, zero inspector wiring</div>
+          <div class="skill-pill"><strong>Priority Arbitration</strong>Unified alert slot, enum-based priority</div>
+          <div class="skill-pill"><strong>Physics Queries</strong>Linecast, OverlapSphere, per-LayerMask</div>
+          <div class="skill-pill"><strong>Coroutine Management</strong>Guarded exit paths, state restoration</div>
+          <div class="skill-pill"><strong>Memory System</strong>LKP snap on sight-loss, expiry logic</div>
+          <div class="skill-pill"><strong>Ragdoll Physics</strong>Directional force, isKinematic toggling</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="window">
+    <div class="window-titlebar">
+      <span>Other Projects</span>
+      <div class="window-controls"><div class="win-btn">✕</div></div>
+    </div>
+    <div class="window-body">
+      <div class="project-nav">
+        <a class="nav-proj-btn" href="crimson.html">
+          <span>←</span>
+          <span>
+            <span class="proj-label">Previous Project</span>
+            <span class="proj-name">A* Implementation</span>
+          </span>
+        </a>
+        <a class="nav-proj-btn" href="index.html" style="flex:0;min-width:auto;padding:12px 24px;">All Projects</a>
+        <a class="nav-proj-btn next" href="brothers.html">
+          <span>
+            <span class="proj-label">Next Project</span>
+            <span class="proj-name">Brothers on the Hill</span>
+          </span>
+          <span>→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="taskbar">
+  <a href="index.html" class="taskbar-btn">Start</a>
+  <div class="taskbar-btn">Zombie AI</div>
+  <div class="taskbar-clock" id="clock"></div>
+</div>
+
+<script>
+  function switchTab(btn, paneId) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(paneId).classList.add('active');
+  }
+  function updateClock() {
+    document.getElementById('clock').textContent =
+      new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+</script>
+</body>
+</html>
