@@ -32,9 +32,7 @@
   .navbar {
     position: sticky; top: 0; z-index: 50;
     background: var(--surface);
-    border-bottom: 2px solid;
-    border-color: #fff #999 #999 #fff;
-    box-shadow: 0 2px 0 var(--border-dark);
+    border-bottom: 2px solid var(--border);
     display: flex;
     align-items: center;
     padding: 8px 24px;
@@ -42,8 +40,7 @@
   }
   .nav-back {
     background: var(--surface);
-    border: 2px solid;
-    border-color: #fff #999 #999 #fff;
+    border: 2px solid var(--border);
     padding: 6px 16px;
     font-family: var(--font);
     font-size: 15px;
@@ -60,18 +57,15 @@
     background: #232d3f;
     color: var(--accent);
   }
-  .nav-back:active { border-color: #999 #fff #fff #999; }
   .nav-title { font-size: 15px; font-weight: 700; color: var(--text-muted); }
   .nav-sep { color: var(--border-dark); }
 
   .window {
     background: var(--surface);
-    border: 2px solid;
-    border-color: #fff #999 #999 #fff;
-    box-shadow: var(--shadow);
+    border: 2px solid var(--border);
   }
   .window-titlebar {
-    background: linear-gradient(180deg, var(--win-title) 0%, #164ebf 100%);
+    background: var(--win-title);
     color: #fff;
     padding: 6px 12px;
     display: flex;
@@ -85,8 +79,7 @@
   .win-btn {
     width: 18px; height: 16px;
     background: var(--surface);
-    border: 2px solid;
-    border-color: #fff #999 #999 #fff;
+    border: 1px solid var(--border-dark);
     font-size: 10px;
     display: flex; align-items: center; justify-content: center;
     cursor: pointer;
@@ -127,8 +120,7 @@
     display: flex;
     gap: 0;
     flex-wrap: wrap;
-    border: 2px solid;
-    border-color: #999 #fff #fff #999;
+    border: 2px solid var(--border);
     margin-bottom: 4px;
   }
   .stat {
@@ -188,12 +180,11 @@
   }
   .gif-item {
     background: #111;
-    border: 2px solid;
-    border-color: #999 #fff #fff #999;
+    border: 2px solid var(--border);
     overflow: hidden;
   }
   .gif-item.wide { grid-column: 1 / -1; }
-  .gif-item img {
+  .gif-item video {
     width: 100%;
     display: block;
     object-fit: cover;
@@ -305,8 +296,7 @@
   .skill-pill {
     padding: 12px 14px;
     background: var(--bg);
-    border: 2px solid;
-    border-color: #fff #999 #999 #fff;
+    border: 2px solid var(--border);
     font-size: 14px;
     color: var(--text-muted);
     line-height: 1.4;
@@ -327,8 +317,7 @@
   }
   .nav-proj-btn {
     background: var(--bg);
-    border: 2px solid;
-    border-color: #fff #999 #999 #fff;
+    border: 2px solid var(--border);
     padding: 12px 20px;
     font-size: 15px;
     font-weight: 600;
@@ -342,7 +331,7 @@
     flex: 1;
     min-width: 180px;
   }
-  .nav-proj-btn:active { border-color: #999 #fff #fff #999; }
+
   .nav-proj-btn.next { justify-content: flex-end; text-align: right; }
   .nav-proj-btn .proj-label {
     font-size: 12px;
@@ -371,8 +360,7 @@
   }
   .taskbar-btn {
     background: var(--bg);
-    border: 2px solid;
-    border-color: #fff #999 #999 #fff;
+    border: 2px solid var(--border);
     padding: 4px 14px;
     font-size: 14px;
     font-weight: bold;
@@ -383,8 +371,7 @@
   }
   .taskbar-clock {
     margin-left: auto;
-    border: 2px solid;
-    border-color: #999 #fff #fff #999;
+    border: 2px solid var(--border);
     padding: 4px 12px;
     font-size: 14px;
   }
@@ -401,7 +388,7 @@
 <body>
 
 <div class="navbar">
-  <a class="nav-back" href="index.html">← Back</a>
+  <a class="nav-back" href="index.html">< Back</a>
   <span class="nav-sep">/</span>
   <span class="nav-title">Advanced Zombie AI</span>
 </div>
@@ -410,7 +397,7 @@
 
   <div class="window">
     <div class="window-titlebar">
-      <span>🧟 Advanced Zombie AI Project Overview</span>
+      <span>Advanced Zombie AI Project Overview</span>
       <div class="window-controls">
         <div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn">✕</div>
       </div>
@@ -421,7 +408,6 @@
       <p class="hero-sub">8-state enemy AI with tiered sound detection, squad alerting, player memory, and dynamic music crossfade. Built so the zombie isn't just chasing you it remembers where you were, and it told its friends.</p>
       <div class="stat-row">
         <div class="stat"><div class="stat-num">8</div><div class="stat-label">AI States</div></div>
-        <div class="stat"><div class="stat-num">~1200</div><div class="stat-label">Lines (Core)</div></div>
         <div class="stat"><div class="stat-num">6</div><div class="stat-label">Companion Scripts</div></div>
         <div class="stat"><div class="stat-num">5</div><div class="stat-label">Sound Priorities</div></div>
       </div>
@@ -430,7 +416,7 @@
 
   <div class="window">
     <div class="window-titlebar">
-      <span>📂 Project Files</span>
+      <span>Project Files</span>
       <div class="window-controls">
         <div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn">✕</div>
       </div>
@@ -488,39 +474,38 @@
       </div>
 
       <div class="tab-pane" id="tab-gameplay">
-  <div class="gif-item wide" style="margin-bottom:12px;">
-    <video src="ZombieDeath.mp4" autoplay muted loop playsinline
-      style="width:100%;display:block;"></video>
-    <div class="gif-caption">AI in Action</div>
-  </div>
+        <div class="gif-item wide" style="margin-bottom:12px;">
+          <video src="ZombieDeath.mp4" autoplay muted loop playsinline style="width:100%;display:block;"></video>
+          <div class="gif-caption">AI in Action</div>
+        </div>
 
-  <div class="gif-grid">
-    <div class="gif-item wide">
-      <img src="sprintHeard.gif" alt="Zombie reacts to player sprinting">
-      <div class="gif-caption">Sprint detected. The zombie abandons patrol and moves toward the sound source priority 2 on the alert bus.</div>
-    </div>
+        <div class="gif-grid">
+          <div class="gif-item wide">
+            <video src="sprintGIF.mp4" autoplay loop muted playsinline style="width:100%;display:block;object-fit:cover;"></video>
+            <div class="gif-caption">Sprint detected. The zombie abandons patrol and moves toward the sound source priority 2 on the alert bus.</div>
+          </div>
 
-    <div class="gif-item">
-      <img src="Distraction.gif" alt="Zombie diverted by thrown distraction">
-      <div class="gif-caption">Distraction thrown from range. The zombie breaks patrol and navigates to the alert position.</div>
-    </div>
+          <div class="gif-item">
+            <video src="distractionGIF.mp4" autoplay loop muted playsinline style="width:100%;display:block;object-fit:cover;"></video>
+            <div class="gif-caption">Distraction thrown from range. The zombie breaks patrol and navigates to the alert position.</div>
+          </div>
 
-    <div class="gif-item">
-      <img src="closeDistraction.gif" alt="Close range distraction response">
-      <div class="gif-caption">Close distraction. Larger search radius generated the zombie sweeps the area before returning.</div>
-    </div>
+          <div class="gif-item">
+            <video src="investigationGIF.mp4" autoplay loop muted playsinline style="width:100%;display:block;object-fit:cover;"></video>
+            <div class="gif-caption">Close distraction. Larger search radius generated the zombie sweeps the area before returning.</div>
+          </div>
 
-    <div class="gif-item">
-      <img src="FeedingTorch.gif" alt="Feeding state with torch detection">
-      <div class="gif-caption">Feeding state. The zombie exists between encounters. Torch detection active intensity falls off by distance and angle.</div>
-    </div>
+          <div class="gif-item">
+            <video src="feedingGIF.mp4" autoplay loop muted playsinline style="width:100%;display:block;object-fit:cover;"></video>
+            <div class="gif-caption">Feeding state. The zombie exists between encounters. Torch detection active intensity falls off by distance and angle.</div>
+          </div>
 
-    <div class="gif-item">
-      <img src="ZombieDeath.gif" alt="Ragdoll death with directional force">
-      <div class="gif-caption">Ragdoll death. Directional impulse applied on hit vector the zombie falls away from the damage source.</div>
-    </div>
-  </div>
-</div>
+          <div class="gif-item">
+            <video src="deathGIF.mp4" autoplay loop muted playsinline style="width:100%;display:block;object-fit:cover;"></video>
+            <div class="gif-caption">Ragdoll death. Directional impulse applied on hit vector the zombie falls away from the damage source.</div>
+          </div>
+        </div>
+      </div>
 
       <div class="tab-pane" id="tab-tech">
 
@@ -568,7 +553,7 @@
 
   <div class="window">
     <div class="window-titlebar">
-      <span>🗂 Other Projects</span>
+      <span>Other Projects</span>
       <div class="window-controls"><div class="win-btn">✕</div></div>
     </div>
     <div class="window-body">
@@ -595,8 +580,8 @@
 </div>
 
 <div class="taskbar">
-  <a href="index.html" class="taskbar-btn">🪟 Start</a>
-  <div class="taskbar-btn">🧟 Zombie AI</div>
+  <a href="index.html" class="taskbar-btn">Start</a>
+  <div class="taskbar-btn">Zombie AI</div>
   <div class="taskbar-clock" id="clock"></div>
 </div>
 

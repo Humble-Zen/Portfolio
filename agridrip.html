@@ -21,17 +21,17 @@
   }
   body{background:var(--bg);font-family:var(--font);font-size:17px;color:var(--text);line-height:1.65;padding-bottom:60px;}
 
-  .navbar{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:2px solid;border-color:#fff #999 #999 #fff;box-shadow:0 2px 0 var(--border-dark);display:flex;align-items:center;padding:8px 24px;gap:12px;}
-  .nav-back{background:var(--surface);border:2px solid;border-color:#fff #999 #999 #fff;padding:6px 16px;font-family:var(--font);font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;color:var(--text);transition:all 0.15s ease;}
+  .navbar{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:2px solid var(--border);display:flex;align-items:center;padding:8px 24px;gap:12px;}
+  .nav-back{background:var(--surface);border:2px solid var(--border);padding:6px 16px;font-family:var(--font);font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;color:var(--text);transition:all 0.15s ease;}
   .nav-back:hover{background:#232d3f;color:var(--accent);}
-  .nav-back:active{border-color:#999 #fff #fff #999;}
+
   .nav-title{font-size:15px;font-weight:700;color:var(--text-muted);}
   .nav-sep{color:var(--border-dark);}
 
-  .window{background:var(--surface);border:2px solid;border-color:#fff #999 #999 #fff;box-shadow:var(--shadow);}
-  .window-titlebar{background:linear-gradient(180deg,var(--win-title) 0%,#164ebf 100%);color:#fff;padding:6px 12px;display:flex;align-items:center;justify-content:space-between;font-size:14px;font-weight:bold;user-select:none;}
+  .window{background:var(--surface);border:2px solid var(--border);}
+  .window-titlebar{background:var(--win-title);color:#fff;padding:6px 12px;display:flex;align-items:center;justify-content:space-between;font-size:14px;font-weight:bold;user-select:none;}
   .window-controls{display:flex;gap:4px;}
-  .win-btn{width:18px;height:16px;background:var(--bg);border:2px solid;border-color:#fff #999 #999 #fff;font-size:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+  .win-btn{width:18px;height:16px;background:var(--bg);border:1px solid var(--border-dark);font-size:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
   .window-body{padding:28px 32px;}
 
   .page-wrap{max-width:900px;margin:0 auto;padding:32px 24px;display:flex;flex-direction:column;gap:28px;}
@@ -40,7 +40,7 @@
   .hero-title{font-size:clamp(32px,5vw,52px);font-weight:900;letter-spacing:-1px;line-height:1.05;margin-bottom:12px;}
   .hero-sub{font-size:18px;color:var(--text-muted);margin-bottom:20px;line-height:1.6;}
 
-  .stat-row{display:flex;flex-wrap:wrap;border:2px solid;border-color:#999 #fff #fff #999;}
+  .stat-row{display:flex;flex-wrap:wrap;border:2px solid var(--border);}
   .stat{flex:1;min-width:100px;padding:14px 20px;border-right:1px solid var(--border-dark);background:var(--bg);}
   .stat:last-child{border-right:none;}
   .stat-num{font-size:28px;font-weight:900;color:var(--accent);line-height:1;margin-bottom:4px;}
@@ -53,46 +53,71 @@
   .tab-pane.active{display:block;}
 
   /* GIF / media */
-  .gif-item{width:100%;background:#0a0a0a;border:2px solid;border-color:#999 #fff #fff #999;overflow:hidden;margin-bottom:20px;}
+  .gif-item{width:100%;background:#0a0a0a;border:2px solid var(--border);overflow:hidden;margin-bottom:20px;}
   .gif-item img{width:100%;height:auto;display:block;aspect-ratio:16/9;object-fit:cover;}
   .gif-caption{padding:10px 14px;font-size:14px;font-weight:600;color:var(--text-muted);background:var(--surface);border-top:1px solid var(--border-dark);}
 
   .gif-section-label{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent-secondary);margin-bottom:12px;margin-top:24px;}
   .gif-section-label:first-child{margin-top:0;}
 
-  .placeholder-thumb{width:100%;aspect-ratio:16/9;background:#0a0a0a;display:flex;align-items:center;justify-content:center;font-size:64px;border:2px solid;border-color:#999 #fff #fff #999;margin-bottom:20px;}
-
   .tech-block{margin-bottom:28px;}
   .tech-h{font-size:16px;font-weight:800;text-transform:uppercase;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--border-dark);color:var(--accent);}
   .tech-p{font-size:17px;color:var(--text-muted);line-height:1.75;margin-bottom:10px;}
   .tech-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
   .tech-list li{font-size:17px;color:var(--text-muted);padding-left:20px;position:relative;line-height:1.65;}
-  .tech-list li::before{content:'→';position:absolute;left:0;color:var(--accent);font-weight:700;}
+  .tech-list li::before{content:'->';position:absolute;left:0;color:var(--accent);font-weight:700;}
   .tech-list li strong{color:var(--text);}
 
+  /* Flow steps */
+  .flow-steps{display:flex;flex-direction:column;gap:0;margin-bottom:28px;}
+  .flow-step{display:flex;align-items:flex-start;gap:16px;padding:14px 18px;background:var(--bg);border:2px solid var(--border);border-bottom:none;}
+  .flow-step:last-child{border-bottom:2px solid var(--border);}
+  .flow-num{flex-shrink:0;width:28px;height:28px;background:var(--win-title);color:#fff;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;}
+  .flow-text{font-size:16px;color:var(--text-muted);line-height:1.6;padding-top:3px;}
+  .flow-text strong{color:var(--text);}
+
+  /* Impact grid */
+  .impact-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:28px;}
+  .impact-card{background:var(--bg);border:2px solid var(--border);padding:16px 14px;text-align:center;}
+  .impact-icon{font-size:28px;margin-bottom:8px;}
+  .impact-title{font-size:14px;font-weight:800;color:var(--text);margin-bottom:6px;line-height:1.3;}
+  .impact-desc{font-size:13px;color:var(--text-muted);line-height:1.5;}
+
+  /* Scale list */
+  .scale-list{display:flex;flex-direction:column;gap:8px;margin-bottom:28px;}
+  .scale-item{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;background:var(--bg);border-left:4px solid var(--win-title);}
+  .scale-num{flex-shrink:0;font-size:18px;font-weight:900;color:var(--win-title);line-height:1.3;}
+  .scale-text{font-size:16px;color:var(--text-muted);line-height:1.6;}
+  .scale-text strong{color:var(--text);}
+
+  .market-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px;}
+  .market-chip{flex:1;min-width:140px;background:var(--win-title);color:#fff;padding:14px 18px;text-align:center;}
+  .market-val{font-size:22px;font-weight:900;margin-bottom:4px;}
+  .market-label{font-size:12px;font-weight:600;letter-spacing:0.5px;opacity:0.85;}
+
   .skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;}
-  .skill-pill{padding:12px 14px;background:var(--bg);border:2px solid;border-color:#fff #999 #999 #fff;font-size:14px;color:var(--text-muted);}
+  .skill-pill{padding:12px 14px;background:var(--bg);border:2px solid var(--border);font-size:14px;color:var(--text-muted);}
   .skill-pill strong{display:block;color:var(--text);font-size:15px;margin-bottom:3px;}
 
   .project-nav{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
-  .nav-proj-btn{background:var(--bg);border:2px solid;border-color:#fff #999 #999 #fff;padding:12px 20px;font-size:15px;font-weight:600;font-family:var(--font);cursor:pointer;text-decoration:none;color:var(--text);display:flex;align-items:center;gap:8px;flex:1;min-width:180px;transition:all 0.15s ease;}
+  .nav-proj-btn{background:var(--bg);border:2px solid var(--border);padding:12px 20px;font-size:15px;font-weight:600;font-family:var(--font);cursor:pointer;text-decoration:none;color:var(--text);display:flex;align-items:center;gap:8px;flex:1;min-width:180px;transition:all 0.15s ease;}
   .nav-proj-btn:hover{background:#232d3f;color:var(--accent);}
-  .nav-proj-btn:active{border-color:#999 #fff #fff #999;}
+
   .nav-proj-btn.next{justify-content:flex-end;text-align:right;}
   .proj-label{font-size:12px;font-weight:400;color:var(--text-muted);display:block;}
   .proj-name{font-size:16px;font-weight:700;display:block;}
 
   .taskbar{position:fixed;bottom:0;left:0;right:0;height:40px;background:var(--bg);border-top:2px solid #fff;box-shadow:0 -1px 0 var(--border-dark);display:flex;align-items:center;padding:0 8px;gap:8px;z-index:100;}
-  .taskbar-btn{background:var(--bg);border:2px solid;border-color:#fff #999 #999 #fff;padding:4px 14px;font-size:14px;font-weight:bold;font-family:var(--font);cursor:pointer;text-decoration:none;color:var(--text);}
-  .taskbar-clock{margin-left:auto;border:2px solid;border-color:#999 #fff #fff #999;padding:4px 12px;font-size:14px;}
+  .taskbar-btn{background:var(--bg);border:2px solid var(--border);padding:4px 14px;font-size:14px;font-weight:bold;font-family:var(--font);cursor:pointer;text-decoration:none;color:var(--text);}
+  .taskbar-clock{margin-left:auto;border:2px solid var(--border);padding:4px 12px;font-size:14px;}
 
-  @media(max-width:600px){.window-body{padding:20px 16px;}.page-wrap{padding:20px 16px;}.stat-row{flex-direction:column;}}
+  @media(max-width:600px){.window-body{padding:20px 16px;}.page-wrap{padding:20px 16px;}.stat-row{flex-direction:column;}.impact-grid{grid-template-columns:1fr 1fr;}.market-row{flex-direction:column;}}
 </style>
 </head>
 <body>
 
 <div class="navbar">
-  <a class="nav-back" href="index.html">← Back</a>
+  <a class="nav-back" href="index.html">< Back</a>
   <span class="nav-sep">/</span>
   <span class="nav-title">AgriDrip Dashboard</span>
 </div>
@@ -102,20 +127,20 @@
   <!-- HERO -->
   <div class="window">
     <div class="window-titlebar">
-      <span>🌱 AgriDrip Dashboard Project Overview</span>
+      <span>AgriDrip Dashboard Project Overview</span>
       <div class="window-controls">
-        <div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn">✕</div>
+        <div class="win-btn">_</div><div class="win-btn">-</div><div class="win-btn">X</div>
       </div>
     </div>
     <div class="window-body">
-      <div class="hero-meta">Unity · IoT · Firebase · National Hackathon</div>
+      <div class="hero-meta">Unity - IoT - Firebase - National Hackathon</div>
       <div class="hero-title">AgriDrip Dashboard</div>
       <p class="hero-sub">Real-time smart farming dashboard with Firebase IoT integration, OpenWeatherMap REST API, multilingual UI (English/Hindi/Marathi), and automated irrigation control. Selected for the Pune Agri National Level Hackathon.</p>
       <div class="stat-row">
         <div class="stat"><div class="stat-num">9</div><div class="stat-label">Scripts</div></div>
         <div class="stat"><div class="stat-num">5</div><div class="stat-label">Subsystems</div></div>
         <div class="stat"><div class="stat-num">3</div><div class="stat-label">Languages</div></div>
-        <div class="stat"><div class="stat-num">🏆</div><div class="stat-label">National Level</div></div>
+        <div class="stat"><div class="stat-num"></div><div class="stat-label">National Level</div></div>
       </div>
     </div>
   </div>
@@ -123,13 +148,14 @@
   <!-- TABS -->
   <div class="window">
     <div class="window-titlebar">
-      <span>📂 Project Files</span>
+      <span>Project Files</span>
       <div class="window-controls"><div class="win-btn">✕</div></div>
     </div>
     <div class="window-body">
 
       <div class="tab-bar">
         <button class="tab active" onclick="switchTab(this,'tab-overview')">Overview</button>
+        <button class="tab" onclick="switchTab(this,'tab-iot')">IoT Technical</button>
         <button class="tab" onclick="switchTab(this,'tab-tech')">Technical</button>
         <button class="tab" onclick="switchTab(this,'tab-skills')">Skills</button>
       </div>
@@ -140,12 +166,12 @@
         <div class="gif-section-label">Dashboard in Action</div>
         <div class="gif-item">
           <img src="AgriDripMain.gif" alt="AgriDrip Dashboard running in Unity">
-          <div class="gif-caption">🌱 AgriDrip live dashboard real-time sensor data, 3D soil moisture visualisation, weather integration, and irrigation controls in a single Unity interface.</div>
+          <div class="gif-caption">AgriDrip live dashboard, real-time sensor data, 3D soil moisture visualisation, weather integration, and irrigation controls in a single Unity interface.</div>
         </div>
 
         <div class="tech-block">
           <div class="tech-h">What Is AgriDrip?</div>
-          <p class="tech-p">AgriDrip is a live dashboard not a game built in Unity for actual field use. It connects to IoT hardware over Firebase, reads soil moisture from sensors, and sends irrigation commands back to pumps based on thresholds. The whole loop runs in realtime: sensor → Firebase → Unity evaluates → writes command → pump responds.</p>
+          <p class="tech-p">AgriDrip is a live dashboard, not a game, built in Unity for actual field use. It connects to IoT hardware over Firebase, reads soil moisture from sensors, and sends irrigation commands back to pumps based on thresholds. The whole loop runs in realtime: sensor -> Firebase -> Unity evaluates -> writes command -> pump responds.</p>
           <p class="tech-p">Presented at the <strong>Pune Agri National Level Hackathon (2024)</strong>.</p>
         </div>
 
@@ -153,11 +179,137 @@
           <div class="tech-h">UX Notes</div>
           <ul class="tech-list">
             <li><strong>3D soil cube</strong> uses Color.Lerp (blue = wet, red = dry) so you can tell moisture at a glance before reading any numbers.</li>
-            <li><strong>Auto/Manual toggle</strong> blocks manual input while automation is active the UI can't fight itself.</li>
+            <li><strong>Auto/Manual toggle</strong> blocks manual input while automation is active, the UI can't fight itself.</li>
             <li><strong>Rain particles</strong> respond to live OpenWeatherMap data so the dashboard reflects outdoor conditions passively.</li>
             <li><strong>English/Hindi/Marathi</strong> built for farmers actually using it in the field, not added as an afterthought.</li>
             <li><strong>SMS via Twilio</strong> as a backup for when nobody's watching the screen.</li>
           </ul>
+        </div>
+
+      </div>
+
+      <!-- IOT TECHNICAL TAB -->
+      <div class="tab-pane" id="tab-iot">
+
+        <!-- Technical Flow image -->
+        <div class="gif-section-label">Technical Flow Diagram</div>
+        <div class="gif-item" style="margin-bottom:28px;">
+          <img src="Pune.png" alt="AgriDrip Technical Flow Diagram" style="aspect-ratio:16/9;object-fit:contain;background:#fff;">
+          <div class="gif-caption">Full system technical flow, sensor inputs, RPI processing, Firebase, LSTM prediction model, and web dashboard pipeline.</div>
+        </div>
+
+        <!-- Solution Flow -->
+        <div class="tech-block">
+          <div class="tech-h">Solution Flow</div>
+          <div class="flow-steps">
+            <div class="flow-step">
+              <div class="flow-num">1</div>
+              <div class="flow-text">Deploy <strong>a few GPS-enabled sensors</strong> instead of many fixed ones, reducing hardware costs while maintaining coverage.</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-num">2</div>
+              <div class="flow-text"><strong>Transmit sensor data wirelessly</strong> to a central system via Raspberry Pi and Firebase Realtime Database.</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-num">3</div>
+              <div class="flow-text"><strong>Estimate soil conditions</strong> using spatial interpolation and learning, Kriging fills in the gaps between physical sensor positions.</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-num">4</div>
+              <div class="flow-text"><strong>Predict soil moisture and health</strong> through an LSTM neural network model trained on batched sensor and weather data.</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-num">5</div>
+              <div class="flow-text"><strong>Control irrigation automatically</strong> through the Unity dashboard, sector-wise predicted moisture levels trigger pump commands.</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-num">6</div>
+              <div class="flow-text"><strong>Send SMS alerts to farmers</strong> using Twilio when motor state changes, backup for when nobody is watching the screen.</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-num">7</div>
+              <div class="flow-text">Farmers monitor the system; <strong>the model keeps learning from new data</strong>, getting familiar with the specific soil of that field over time.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Technical Design -->
+        <div class="tech-block">
+          <div class="tech-h">Technical Design - Data Pipeline</div>
+          <ul class="tech-list">
+            <li>Sensor data is sent to <strong>Firebase Realtime Database every 0.8 seconds</strong>.</li>
+            <li><strong>Batch averaging</strong> of raw moisture data over 30-minute intervals reduces noise and cloud load.</li>
+            <li>After 4 hours, <strong>8 sets of averaged data are compiled</strong> and combined with weather API data and static field info (soil/crop type).</li>
+            <li>The <strong>LSTM model predicts soil moisture</strong> across all field sectors from this compiled dataset.</li>
+            <li><strong>Sector-wise averaging</strong> of predicted values determines which zones need irrigation and when.</li>
+            <li>Irrigation is <strong>automatically triggered</strong> based on predicted moisture levels, no manual intervention needed.</li>
+            <li>The <strong>Moisture Response Model</strong> determines the optimal time to stop irrigation, preventing over-watering.</li>
+          </ul>
+        </div>
+
+        <!-- Feasibility & Impact -->
+        <div class="tech-block">
+          <div class="tech-h">Feasibility & Impact</div>
+          <div class="impact-grid">
+            <div class="impact-card">
+              <div class="impact-icon"></div>
+              <div class="impact-title">Low-Cost Deployment</div>
+              <div class="impact-desc">Fewer mobile sensors + existing wireless infrastructure minimises hardware and operational costs.</div>
+            </div>
+            <div class="impact-card">
+              <div class="impact-icon"></div>
+              <div class="impact-title">Real-Time Insights</div>
+              <div class="impact-desc">Kriging + ML delivers accurate soil and irrigation insights, enabling predictive analytics.</div>
+            </div>
+            <div class="impact-card">
+              <div class="impact-icon"></div>
+              <div class="impact-title">Remote Farm Control</div>
+              <div class="impact-desc">Remote monitoring and control saves farmers time and improves operational efficiency.</div>
+            </div>
+            <div class="impact-card">
+              <div class="impact-icon"></div>
+              <div class="impact-title">Precision Agriculture</div>
+              <div class="impact-desc">Optimises water and fertilizer usage through precise nutrient and irrigation management.</div>
+            </div>
+            <div class="impact-card">
+              <div class="impact-icon"></div>
+              <div class="impact-title">Real-Time Alerts</div>
+              <div class="impact-desc">Twilio SMS integration keeps farmers informed and responsive even without screen access.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scalability -->
+        <div class="tech-block">
+          <div class="tech-h">Scalability & Market Scope</div>
+          <div class="scale-list">
+            <div class="scale-item">
+              <div class="scale-num">1</div>
+              <div class="scale-text"><strong>Modular sensor nodes</strong> allow easy system expansion as field coverage needs grow.</div>
+            </div>
+            <div class="scale-item">
+              <div class="scale-num">2</div>
+              <div class="scale-text"><strong>Cloud-based architecture</strong> enables scalable data handling across large agricultural areas.</div>
+            </div>
+            <div class="scale-item">
+              <div class="scale-num">3</div>
+              <div class="scale-text"><strong>Local data averaging</strong> reduces computational load on cloud servers and improves efficiency.</div>
+            </div>
+            <div class="scale-item">
+              <div class="scale-num">4</div>
+              <div class="scale-text">The system <strong>integrates easily with external APIs</strong> and platforms for added functionality.</div>
+            </div>
+            <div class="scale-item">
+              <div class="scale-num">5</div>
+              <div class="scale-text"><strong>Supports multi-field integration</strong> for large farm operations across multiple zones.</div>
+            </div>
+            <div class="scale-item">
+              <div class="scale-num">6</div>
+              <div class="scale-text">The ML model is <strong>retrainable to adapt to different crops</strong>, soil types, and regional conditions.</div>
+            </div>
+          </div>
+
+
         </div>
 
       </div>
@@ -174,7 +326,7 @@
           <div class="tech-h">Firebase</div>
           <ul class="tech-list">
             <li>Async coroutine init with a dependency check before any DB references are created.</li>
-            <li>Three <strong>ValueChanged listeners</strong> no polling, push-based.</li>
+            <li>Three <strong>ValueChanged listeners</strong>, no polling, push-based.</li>
             <li>Manual Dictionary&lt;string,object&gt; parsing with ToFloat/ToInt helpers.</li>
           </ul>
         </div>
@@ -198,7 +350,7 @@
           <div class="skill-pill"><strong>Thread Safety</strong>Queue&lt;Action&gt; dispatcher, WebGL-safe</div>
           <div class="skill-pill"><strong>Observer Pattern</strong>C# events decoupling all subsystems</div>
           <div class="skill-pill"><strong>Localisation</strong>Devanagari digits, TMP font switching</div>
-          <div class="skill-pill"><strong>IoT Closed Loop</strong>Sensor → Dashboard → Hardware control</div>
+          <div class="skill-pill"><strong>IoT Closed Loop</strong>Sensor -> Dashboard -> Hardware control</div>
           <div class="skill-pill"><strong>State-Gated Alerts</strong>Prevents duplicate API calls</div>
           <div class="skill-pill"><strong>Data Visualisation</strong>Color.Lerp on 3D mesh material</div>
         </div>
@@ -210,19 +362,19 @@
   <!-- PROJECT NAV -->
   <div class="window">
     <div class="window-titlebar">
-      <span>🗂 Other Projects</span>
+      <span>Other Projects</span>
       <div class="window-controls"><div class="win-btn">✕</div></div>
     </div>
     <div class="window-body">
       <div class="project-nav">
         <a class="nav-proj-btn" href="brothers.html">
-          <span>←</span>
+          <span><</span>
           <span><span class="proj-label">Previous Project</span><span class="proj-name">Brothers on the Hill</span></span>
         </a>
         <a class="nav-proj-btn" href="index.html" style="flex:0;min-width:auto;padding:12px 24px;">All Projects</a>
         <a class="nav-proj-btn next" href="besafe.html">
           <span><span class="proj-label">Next Project</span><span class="proj-name">Be Safe Lily</span></span>
-          <span>→</span>
+          <span>></span>
         </a>
       </div>
     </div>
@@ -231,8 +383,8 @@
 </div>
 
 <div class="taskbar">
-  <a href="index.html" class="taskbar-btn">🪟 Start</a>
-  <div class="taskbar-btn">🌱 AgriDrip</div>
+  <a href="index.html" class="taskbar-btn">Start</a>
+  <div class="taskbar-btn">AgriDrip</div>
   <div class="taskbar-clock" id="clock"></div>
 </div>
 

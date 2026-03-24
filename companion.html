@@ -7,29 +7,29 @@
 <style>
   *{box-sizing:border-box;margin:0;padding:0;}
   :root{
-    --bg:#121212;
-    --surface:#1e1e1e;
-    --border:#2c2c2c;
-    --border-dark:#3a3a3a;
-    --accent:#4a90e2;
-    --text:#e0e0e0;
-    --text-muted:#b0b0b0;
-    --win-title:#3a6ea5;
+    --bg:#0d1117;
+    --surface:#1a1f2e;
+    --border:#30363d;
+    --border-dark:#484f58;
+    --accent:#58a6ff;
+    --text:#f0f6fc;
+    --text-muted:#95a5ad;
+    --win-title:#1f6feb;
     --font:'Helvetica',sans-serif;
-    --shadow:2px 2px 0px #2c2c2c;
+    --shadow:2px 2px 0px #0d0d0d;
   }
   body{background:var(--bg);font-family:var(--font);font-size:17px;color:var(--text);line-height:1.65;padding-bottom:60px;}
 
-  .navbar{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:2px solid;border-color:#fff #999 #999 #fff;box-shadow:0 2px 0 var(--border-dark);display:flex;align-items:center;padding:8px 24px;gap:12px;}
-  .nav-back{background:var(--surface);border:2px solid;border-color:#fff #999 #999 #fff;padding:6px 16px;font-family:var(--font);font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;color:var(--text);display:flex;align-items:center;gap:6px;}
-  .nav-back:active{border-color:#999 #fff #fff #999;}
+  .navbar{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:2px solid var(--border);display:flex;align-items:center;padding:8px 24px;gap:12px;}
+  .nav-back{background:var(--surface);border:2px solid var(--border);padding:6px 16px;font-family:var(--font);font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;color:var(--text);display:flex;align-items:center;gap:6px;}
+
   .nav-title{font-size:15px;font-weight:700;color:var(--text-muted);}
   .nav-sep{color:var(--border-dark);}
 
-  .window{background:var(--surface);border:2px solid;border-color:#fff #999 #999 #fff;box-shadow:var(--shadow);}
+  .window{background:var(--surface);border:2px solid var(--border);}
   .window-titlebar{background:var(--win-title);color:#fff;padding:6px 12px;display:flex;align-items:center;justify-content:space-between;font-size:14px;font-weight:bold;user-select:none;}
   .window-controls{display:flex;gap:4px;}
-  .win-btn{width:18px;height:16px;background:var(--bg);border:2px solid;border-color:#fff #999 #999 #fff;font-size:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+  .win-btn{width:18px;height:16px;background:var(--bg);border:1px solid var(--border-dark);font-size:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
   .window-body{padding:28px 32px;}
 
   .page-wrap{max-width:900px;margin:0 auto;padding:32px 24px;display:flex;flex-direction:column;gap:28px;}
@@ -38,7 +38,7 @@
   .hero-title{font-size:clamp(32px,5vw,52px);font-weight:900;letter-spacing:-1px;line-height:1.05;margin-bottom:12px;}
   .hero-sub{font-size:18px;color:var(--text-muted);margin-bottom:20px;line-height:1.6;}
 
-  .stat-row{display:flex;flex-wrap:wrap;border:2px solid;border-color:#999 #fff #fff #999;}
+  .stat-row{display:flex;flex-wrap:wrap;border:2px solid var(--border);}
   .stat{flex:1;min-width:100px;padding:14px 20px;border-right:1px solid var(--border-dark);background:var(--bg);}
   .stat:last-child{border-right:none;}
   .stat-num{font-size:28px;font-weight:900;color:var(--win-title);line-height:1;margin-bottom:4px;}
@@ -66,30 +66,30 @@
   .state-table tr:nth-child(even) td{background:#1a1a1a;}
 
   .skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;}
-  .skill-pill{padding:12px 14px;background:var(--bg);border:2px solid;border-color:#fff #999 #999 #fff;font-size:14px;color:var(--text-muted);}
+  .skill-pill{padding:12px 14px;background:var(--bg);border:2px solid var(--border);font-size:14px;color:var(--text-muted);}
   .skill-pill strong{display:block;color:var(--text);font-size:15px;margin-bottom:3px;}
 
   .code-block{background:#0d0d0d;border:1px solid var(--border-dark);padding:14px 18px;font-family:monospace;font-size:14px;color:#b0c4de;line-height:1.7;margin-bottom:16px;overflow-x:auto;}
 
   .gif-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:4px;}
-  .gif-item{background:#111;border:2px solid;border-color:#999 #fff #fff #999;overflow:hidden;}
+  .gif-item{background:#111;border:2px solid var(--border);overflow:hidden;}
   .gif-item.wide{grid-column:1 / -1;}
-  .gif-item img{width:100%;display:block;object-fit:cover;}
+  .gif-item video{width:100%;display:block;object-fit:cover;}
   .gif-caption{padding:8px 12px;font-size:13px;font-weight:600;color:var(--text-muted);background:var(--bg);border-top:1px solid var(--border-dark);}
   .gif-section-label{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;margin-top:24px;}
   .gif-section-label:first-child{margin-top:0;}
   @media(max-width:600px){.gif-grid{grid-template-columns:1fr;}.gif-item.wide{grid-column:auto;}}
 
   .project-nav{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
-  .nav-proj-btn{background:var(--bg);border:2px solid;border-color:#fff #999 #999 #fff;padding:12px 20px;font-size:15px;font-weight:600;font-family:var(--font);cursor:pointer;text-decoration:none;color:var(--text);display:flex;align-items:center;gap:8px;flex:1;min-width:180px;}
-  .nav-proj-btn:active{border-color:#999 #fff #fff #999;}
+  .nav-proj-btn{background:var(--bg);border:2px solid var(--border);padding:12px 20px;font-size:15px;font-weight:600;font-family:var(--font);cursor:pointer;text-decoration:none;color:var(--text);display:flex;align-items:center;gap:8px;flex:1;min-width:180px;}
+
   .nav-proj-btn.next{justify-content:flex-end;text-align:right;}
   .proj-label{font-size:12px;font-weight:400;color:var(--text-muted);display:block;}
   .proj-name{font-size:16px;font-weight:700;display:block;}
 
   .taskbar{position:fixed;bottom:0;left:0;right:0;height:40px;background:var(--bg);border-top:2px solid #fff;box-shadow:0 -1px 0 var(--border-dark);display:flex;align-items:center;padding:0 8px;gap:8px;z-index:100;}
-  .taskbar-btn{background:var(--bg);border:2px solid;border-color:#fff #999 #999 #fff;padding:4px 14px;font-size:14px;font-weight:bold;font-family:var(--font);cursor:pointer;text-decoration:none;color:var(--text);}
-  .taskbar-clock{margin-left:auto;border:2px solid;border-color:#999 #fff #fff #999;padding:4px 12px;font-size:14px;}
+  .taskbar-btn{background:var(--bg);border:2px solid var(--border);padding:4px 14px;font-size:14px;font-weight:bold;font-family:var(--font);cursor:pointer;text-decoration:none;color:var(--text);}
+  .taskbar-clock{margin-left:auto;border:2px solid var(--border);padding:4px 12px;font-size:14px;}
 
   @media(max-width:600px){.window-body{padding:20px 16px;}.page-wrap{padding:20px 16px;}.stat-row{flex-direction:column;}.state-table{font-size:13px;}}
 </style>
@@ -97,7 +97,7 @@
 <body>
 
 <div class="navbar">
-  <a class="nav-back" href="index.html">← Back</a>
+  <a class="nav-back" href="index.html">< Back</a>
   <span class="nav-sep">/</span>
   <span class="nav-title">Companion AI</span>
 </div>
@@ -107,7 +107,7 @@
   <!-- HERO -->
   <div class="window">
     <div class="window-titlebar">
-      <span>🤝 Companion AI: Survivor System</span>
+      <span>Companion AI: Survivor System</span>
       <div class="window-controls">
         <div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn">✕</div>
       </div>
@@ -128,7 +128,7 @@
   <!-- TABS -->
   <div class="window">
     <div class="window-titlebar">
-      <span>📂 Project Files</span>
+      <span>Project Files</span>
       <div class="window-controls">
         <div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn">✕</div>
       </div>
@@ -151,27 +151,27 @@
         <div class="gif-grid">
 
           <div class="gif-item wide">
-            <img src="followgif.gif" alt="Follow state">
+            <video src="followGIF.mp4" autoplay loop muted playsinline style="width:100%;display:block;object-fit:cover;"></video>
             <div class="gif-caption">Follow state. The companion trails behind the player along their movement direction, staying out of the shooting line.</div>
           </div>
 
           <div class="gif-item">
-            <img src="hidinggif.gif" alt="Hiding state">
+            <video src="hidingGIF.mp4" autoplay loop muted playsinline style="width:100%;display:block;object-fit:cover;"></video>
             <div class="gif-caption">Hiding state. On CommandHide() she sprints to the nearest hiding spot and crouches. Immune to zombie detection while hidden.</div>
           </div>
 
           <div class="gif-item">
-            <img src="cleargif.gif" alt="Clear state">
+            <video src="clearGIF.mp4" autoplay loop muted playsinline style="width:100%;display:block;object-fit:cover;"></video>
             <div class="gif-caption">CommandClear(). She exits the hiding spot and returns to Follow. Player confirms the area is safe.</div>
           </div>
 
           <div class="gif-item">
-            <img src="Scavenginggif.gif" alt="Scavenging state">
+            <video src="lootGIF.mp4" autoplay loop muted playsinline style="width:100%;display:block;object-fit:cover;"></video>
             <div class="gif-caption">Scavenging state. On CommandScavenge() she walks to the nearest LootSpot, waits the scavenge timer, then returns with supplies.</div>
           </div>
 
           <div class="gif-item">
-            <img src="fleeinggif.gif" alt="Fleeing state">
+            <video src="fleeingGIF.mp4" autoplay loop muted playsinline style="width:100%;display:block;object-fit:cover;"></video>
             <div class="gif-caption">Fleeing state. After taking a hit with enough zombies nearby, she sprints to a sampled NavMesh point away from the threat cluster.</div>
           </div>
 
@@ -371,7 +371,7 @@ velY = gravity * timeToPeak</div>
   <!-- PROJECT NAV -->
   <div class="window">
     <div class="window-titlebar">
-      <span>🗂 Other Projects</span>
+      <span>Other Projects</span>
       <div class="window-controls"><div class="win-btn">✕</div></div>
     </div>
     <div class="window-body">
@@ -392,8 +392,8 @@ velY = gravity * timeToPeak</div>
 </div>
 
 <div class="taskbar">
-  <a href="index.html" class="taskbar-btn">🪟 Start</a>
-  <div class="taskbar-btn">🤝 Companion AI</div>
+  <a href="index.html" class="taskbar-btn">Start</a>
+  <div class="taskbar-btn">Companion AI</div>
   <div class="taskbar-clock" id="clock"></div>
 </div>
 

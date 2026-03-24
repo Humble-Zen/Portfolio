@@ -6,29 +6,29 @@
 <style>
   *{box-sizing:border-box;margin:0;padding:0;}
   :root{
-    --bg:#121212;
-    --surface:#1e1e1e;
-    --border:#2c2c2c;
-    --border-dark:#3a3a3a;
-    --accent:#4a90e2;
-    --text:#e0e0e0;
-    --text-muted:#b0b0b0;
-    --win-title:#3a6ea5;
+    --bg:#0d1117;
+    --surface:#1a1f2e;
+    --border:#30363d;
+    --border-dark:#484f58;
+    --accent:#58a6ff;
+    --text:#f0f6fc;
+    --text-muted:#95a5ad;
+    --win-title:#1f6feb;
     --font: 'Helvetica', sans-serif;
-    --shadow:2px 2px 0px #2c2c2c;
+    --shadow:2px 2px 0px #0d0d0d;
   }
   body{background:var(--bg);font-family:var(--font);font-size:17px;color:var(--text);line-height:1.65;padding-bottom:60px;}
 
-  .navbar{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:2px solid;border-color:#fff #999 #999 #fff;box-shadow:0 2px 0 var(--border-dark);display:flex;align-items:center;padding:8px 24px;gap:12px;}
-  .nav-back{background:var(--surface);border:2px solid;border-color:#fff #999 #999 #fff;padding:6px 16px;font-family:var(--font);font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;color:var(--text);}
-  .nav-back:active{border-color:#999 #fff #fff #999;}
+  .navbar{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:2px solid var(--border);display:flex;align-items:center;padding:8px 24px;gap:12px;}
+  .nav-back{background:var(--surface);border:2px solid var(--border);padding:6px 16px;font-family:var(--font);font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;color:var(--text);}
+
   .nav-title{font-size:15px;font-weight:700;color:var(--text-muted);}
   .nav-sep{color:var(--border-dark);}
 
-  .window{background:var(--surface);border:2px solid;border-color:#fff #999 #999 #fff;box-shadow:var(--shadow);}
+  .window{background:var(--surface);border:2px solid var(--border);}
   .window-titlebar{background:var(--win-title);color:#fff;padding:6px 12px;display:flex;align-items:center;justify-content:space-between;font-size:14px;font-weight:bold;user-select:none;}
   .window-controls{display:flex;gap:4px;}
-  .win-btn{width:18px;height:16px;background:var(--bg);border:2px solid;border-color:#fff #999 #999 #fff;font-size:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+  .win-btn{width:18px;height:16px;background:var(--bg);border:1px solid var(--border-dark);font-size:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
   .window-body{padding:28px 32px;}
 
   .page-wrap{max-width:900px;margin:0 auto;padding:32px 24px;display:flex;flex-direction:column;gap:28px;}
@@ -37,7 +37,7 @@
   .hero-title{font-size:clamp(32px,5vw,52px);font-weight:900;letter-spacing:-1px;line-height:1.05;margin-bottom:12px;}
   .hero-sub{font-size:18px;color:var(--text-muted);margin-bottom:20px;line-height:1.6;}
 
-  .stat-row{display:flex;flex-wrap:wrap;border:2px solid;border-color:#999 #fff #fff #999;}
+  .stat-row{display:flex;flex-wrap:wrap;border:2px solid var(--border);}
   .stat{flex:1;min-width:100px;padding:14px 20px;border-right:1px solid var(--border-dark);background:var(--bg);}
   .stat:last-child{border-right:none;}
   .stat-num{font-size:28px;font-weight:900;color:var(--win-title);line-height:1;margin-bottom:4px;}
@@ -51,7 +51,7 @@
 
   .gif-section-label{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;margin-top:24px;}
   .gif-section-label:first-child{margin-top:0;}
-  .gif-item{background:#0a0a0a;border:2px solid;border-color:#999 #fff #fff #999;overflow:hidden;margin-bottom:4px;}
+  .gif-item{background:#0a0a0a;border:2px solid var(--border);overflow:hidden;margin-bottom:4px;}
   .gif-item img{width:100%;display:block;}
   .gif-caption{padding:10px 14px;font-size:14px;font-weight:600;color:var(--text-muted);background:var(--surface);border-top:1px solid var(--border-dark);}
 
@@ -63,22 +63,22 @@
   .tech-list li::before{content:'→';position:absolute;left:0;color:var(--accent);font-weight:700;}
   .tech-list li strong{color:var(--text);}
 
-  .code-note{background:#0d1117;color:#79c0ff;padding:14px 18px;font-family:'Courier New',monospace;font-size:14px;line-height:1.6;border:2px solid;border-color:#999 #fff #fff #999;margin:12px 0;overflow-x:auto;}
+  .code-note{background:#0d1117;color:#79c0ff;padding:14px 18px;font-family:'Courier New',monospace;font-size:14px;line-height:1.6;border:2px solid var(--border);margin:12px 0;overflow-x:auto;}
 
   .skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;}
-  .skill-pill{padding:12px 14px;background:var(--bg);border:2px solid;border-color:#fff #999 #999 #fff;font-size:14px;color:var(--text-muted);}
+  .skill-pill{padding:12px 14px;background:var(--bg);border:2px solid var(--border);font-size:14px;color:var(--text-muted);}
   .skill-pill strong{display:block;color:var(--text);font-size:15px;margin-bottom:3px;}
 
   .project-nav{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
-  .nav-proj-btn{background:var(--bg);border:2px solid;border-color:#fff #999 #999 #fff;padding:12px 20px;font-size:15px;font-weight:600;font-family:var(--font);cursor:pointer;text-decoration:none;color:var(--text);display:flex;align-items:center;gap:8px;flex:1;min-width:180px;}
-  .nav-proj-btn:active{border-color:#999 #fff #fff #999;}
+  .nav-proj-btn{background:var(--bg);border:2px solid var(--border);padding:12px 20px;font-size:15px;font-weight:600;font-family:var(--font);cursor:pointer;text-decoration:none;color:var(--text);display:flex;align-items:center;gap:8px;flex:1;min-width:180px;}
+
   .nav-proj-btn.next{justify-content:flex-end;text-align:right;}
   .proj-label{font-size:12px;font-weight:400;color:var(--text-muted);display:block;}
   .proj-name{font-size:16px;font-weight:700;display:block;}
 
   .taskbar{position:fixed;bottom:0;left:0;right:0;height:40px;background:var(--bg);border-top:2px solid #fff;box-shadow:0 -1px 0 var(--border-dark);display:flex;align-items:center;padding:0 8px;gap:8px;z-index:100;}
-  .taskbar-btn{background:var(--bg);border:2px solid;border-color:#fff #999 #999 #fff;padding:4px 14px;font-size:14px;font-weight:bold;font-family:var(--font);cursor:pointer;text-decoration:none;color:var(--text);}
-  .taskbar-clock{margin-left:auto;border:2px solid;border-color:#999 #fff #fff #999;padding:4px 12px;font-size:14px;}
+  .taskbar-btn{background:var(--bg);border:2px solid var(--border);padding:4px 14px;font-size:14px;font-weight:bold;font-family:var(--font);cursor:pointer;text-decoration:none;color:var(--text);}
+  .taskbar-clock{margin-left:auto;border:2px solid var(--border);padding:4px 12px;font-size:14px;}
 
   @media(max-width:600px){.window-body{padding:20px 16px;}.page-wrap{padding:20px 16px;}.stat-row{flex-direction:column;}}
 </style>
@@ -86,7 +86,7 @@
 <body>
 
 <div class="navbar">
-  <a class="nav-back" href="index.html">← Back</a>
+  <a class="nav-back" href="index.html">< Back</a>
   <span class="nav-sep">/</span>
   <span class="nav-title">A* Implementation</span>
 </div>
@@ -96,9 +96,9 @@
   <!-- HERO -->
   <div class="window">
     <div class="window-titlebar">
-      <span>♟ A* Implementation Pathfinding & Editor Tool</span>
+      <span>A* Implementation Pathfinding & Editor Tool</span>
       <div class="window-controls">
-        <div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn">✕</div>
+        <div class="win-btn">_</div><div class="win-btn">-</div><div class="win-btn">X</div>
       </div>
     </div>
     <div class="window-body">
@@ -117,7 +117,7 @@
   <!-- TABS -->
   <div class="window">
     <div class="window-titlebar">
-      <span>📂 Project Files</span>
+      <span>Project Files</span>
       <div class="window-controls"><div class="win-btn">✕</div></div>
     </div>
     <div class="window-body">
@@ -259,7 +259,7 @@ h = Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);</div>
   <!-- PROJECT NAV -->
   <div class="window">
     <div class="window-titlebar">
-      <span>🗂 Other Projects</span>
+      <span>Other Projects</span>
       <div class="window-controls"><div class="win-btn">✕</div></div>
     </div>
     <div class="window-body">
@@ -280,7 +280,7 @@ h = Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);</div>
 </div>
 
 <div class="taskbar">
-  <a href="index.html" class="taskbar-btn">🪟 Start</a>
+  <a href="index.html" class="taskbar-btn">Start</a>
   <div class="taskbar-btn">♟ A* Implementation</div>
   <div class="taskbar-clock" id="clock"></div>
 </div>

@@ -7,16 +7,16 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #0d1117; /* Deep dark background */
-    --surface: #1a1f2e; /* Richer surface color */
-    --border: #30363d; /* Better defined border */
-    --border-dark: #484f58; /* Slightly darker border */
-    --accent: #58a6ff; /* Vibrant blue accent */
-    --accent-secondary: #79c0ff; /* Lighter accent */
-    --text: #f0f6fc; /* Crisp white text */
-    --text-muted: #95a5ad; /* Better muted text */
-    --win-title: #1f6feb; /* Vibrant window title */
-    --shadow: 2px 2px 0px #0d0d0d; /* Stronger shadow */
+    --bg: #0d1117;
+    --surface: #1a1f2e;
+    --border: #30363d;
+    --border-dark: #484f58;
+    --accent: #58a6ff;
+    --accent-secondary: #79c0ff;
+    --text: #f0f6fc;
+    --text-muted: #95a5ad;
+    --win-title: #1f6feb;
+    --shadow: 2px 2px 0px #0d0d0d;
     --font: 'Helvetica', sans-serif;
   }
   html { scroll-behavior: smooth; }
@@ -29,13 +29,11 @@
     padding-bottom: 60px;
   }
 
-  /* ── NAV BAR ── */
+  /* NAV BAR */
   .navbar {
     position: sticky; top: 0; z-index: 50;
     background: var(--surface);
-    border-bottom: 2px solid;
-    border-color: #fff #999 #999 #fff;
-    box-shadow: 0 2px 0 var(--border-dark);
+    border-bottom: 2px solid var(--border);
     display: flex;
     align-items: center;
     padding: 8px 24px;
@@ -43,8 +41,7 @@
   }
   .nav-back {
     background: var(--surface);
-    border: 2px solid;
-    border-color: #fff #999 #999 #fff;
+    border: 2px solid var(--border);
     padding: 6px 16px;
     font-family: var(--font);
     font-size: 15px;
@@ -61,7 +58,7 @@
     background: #232d3f;
     color: var(--accent);
   }
-  .nav-back:active { border-color: #999 #fff #fff #999; }
+
   .nav-title {
     font-size: 15px;
     font-weight: 700;
@@ -69,15 +66,13 @@
   }
   .nav-sep { color: var(--border-dark); }
 
-  /* ── WINDOW ── */
+  /* WINDOW */
   .window {
     background: var(--surface);
-    border: 2px solid;
-    border-color: #fff #999 #999 #fff;
-    box-shadow: var(--shadow);
+    border: 2px solid var(--border);
   }
   .window-titlebar {
-    background: linear-gradient(180deg, var(--win-title) 0%, #164ebf 100%);
+    background: var(--win-title);
     color: #fff;
     padding: 6px 12px;
     display: flex;
@@ -91,8 +86,7 @@
   .win-btn {
     width: 18px; height: 16px;
     background: var(--surface);
-    border: 2px solid;
-    border-color: #fff #999 #999 #fff;
+    border: 1px solid var(--border-dark);
     font-size: 10px;
     display: flex; align-items: center; justify-content: center;
     cursor: pointer;
@@ -135,8 +129,7 @@
     display: flex;
     gap: 0;
     flex-wrap: wrap;
-    border: 2px solid;
-    border-color: #999 #fff #fff #999;
+    border: 2px solid var(--border);
     margin-bottom: 4px;
   }
   .stat {
@@ -189,7 +182,7 @@
   .tab-pane { display: none; padding-top: 28px; }
   .tab-pane.active { display: block; }
 
-  /* ── GIF GALLERY ── */
+  /* ── VIDEO GALLERY ── */
   .gif-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -198,14 +191,13 @@
   }
   .gif-item {
     background: #111;
-    border: 2px solid;
-    border-color: #999 #fff #fff #999;
+    border: 2px solid var(--border);
     overflow: hidden;
   }
   .gif-item.wide {
     grid-column: 1 / -1;
   }
-  .gif-item img {
+  .gif-item video {
     width: 100%;
     display: block;
     object-fit: cover;
@@ -317,8 +309,7 @@
   .skill-pill {
     padding: 12px 14px;
     background: var(--bg);
-    border: 2px solid;
-    border-color: #fff #999 #999 #fff;
+    border: 2px solid var(--border);
     font-size: 14px;
     color: var(--text-muted);
     line-height: 1.4;
@@ -340,8 +331,7 @@
   }
   .nav-proj-btn {
     background: var(--bg);
-    border: 2px solid;
-    border-color: #fff #999 #999 #fff;
+    border: 2px solid var(--border);
     padding: 12px 20px;
     font-size: 15px;
     font-weight: 600;
@@ -355,7 +345,7 @@
     flex: 1;
     min-width: 180px;
   }
-  .nav-proj-btn:active { border-color: #999 #fff #fff #999; }
+
   .nav-proj-btn.next { justify-content: flex-end; text-align: right; }
   .nav-proj-btn .proj-label {
     font-size: 12px;
@@ -385,8 +375,7 @@
   }
   .taskbar-btn {
     background: var(--bg);
-    border: 2px solid;
-    border-color: #fff #999 #999 #fff;
+    border: 2px solid var(--border);
     padding: 4px 14px;
     font-size: 14px;
     font-weight: bold;
@@ -395,8 +384,7 @@
   }
   .taskbar-clock {
     margin-left: auto;
-    border: 2px solid;
-    border-color: #999 #fff #fff #999;
+    border: 2px solid var(--border);
     padding: 4px 12px;
     font-size: 14px;
   }
@@ -415,7 +403,7 @@
 
 <!-- NAV -->
 <div class="navbar">
-  <a class="nav-back" href="index.html">← Back</a>
+  <a class="nav-back" href="index.html">< Back</a>
   <span class="nav-sep">/</span>
   <span class="nav-title">Be Safe Lily</span>
 </div>
@@ -446,7 +434,7 @@
   <!-- TABS -->
   <div class="window">
     <div class="window-titlebar">
-      <span>📂 Project Files</span>
+      <span>Project Files</span>
       <div class="window-controls">
         <div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn">✕</div>
       </div>
@@ -507,32 +495,32 @@
 
   <div class="gif-grid">
     <div class="gif-item wide">
-      <img src="Besafe_MonsterShoot.gif" alt="Monster shooting Where am I? These monsters, I need to kill them.">
+      <video src="monsterGIF.mp4" autoplay loop muted playsinline style="width:100%;display:block;object-fit:cover;"></video>
       <div class="gif-caption">"Where am I? And these monsters. I need to kill them." The father fights perceived threats in the dark farm.</div>
     </div>
 
     <div class="gif-item">
-      <img src="Besafe_BaseJumpScare.gif" alt="Jump scare moment">
+      <video src="jumpscareGIF.mp4" autoplay loop muted playsinline style="width:100%;display:block;object-fit:cover;"></video>
       <div class="gif-caption">Jump scare. The world is unstable and hostile.</div>
     </div>
 
     <div class="gif-item">
-      <img src="Besafe_furniturescare.gif" alt="I have Dementia?? locked door">
+      <video src="dementiaGIF.mp4" autoplay loop muted playsinline style="width:100%;display:block;object-fit:cover;"></video>
       <div class="gif-caption">"I have Dementia??" The father confronts a locked door, confused about reality.</div>
     </div>
 
     <div class="gif-item">
-      <img src="Besafe_burnfuel.gif" alt="Burn Hay and get key objective">
+      <video src="burningGIF.mp4" autoplay loop muted playsinline style="width:100%;display:block;object-fit:cover;"></video>
       <div class="gif-caption">Objective Burn Hay and get key. "Lily threw the key in the hay outside." The two phase fire puzzle.</div>
     </div>
 
     <div class="gif-item">
-      <img src="Besafe_Pickup.gif" alt="Following the fire">
+      <video src="tomatoGIF.mp4" autoplay loop muted playsinline style="width:100%;display:block;object-fit:cover;"></video>
       <div class="gif-caption">"I should follow the fire." Navigating the dark farm by the light of flame.</div>
     </div>
 
     <div class="gif-item wide">
-      <img src="Besafe_end.gif" alt="The ending I heard her voice soft like the wind brush">
+      <video src="endingGIF.mp4" autoplay loop muted playsinline style="width:100%;display:block;object-fit:cover;"></video>
       <div class="gif-caption">"I heard her voice. Soft like the wind brush." The father finds Lily's body. The illusion breaks.</div>
     </div>
   </div>
@@ -609,7 +597,7 @@
   <!-- PROJECT NAVIGATION -->
   <div class="window">
     <div class="window-titlebar">
-      <span>🗂 Other Projects</span>
+      <span>Other Projects</span>
       <div class="window-controls"><div class="win-btn">✕</div></div>
     </div>
     <div class="window-body">
@@ -637,7 +625,7 @@
 
 <!-- TASKBAR -->
 <div class="taskbar">
-  <a href="index.html" class="taskbar-btn">🪟 Start</a>
+  <a href="index.html" class="taskbar-btn">Start</a>
   <div class="taskbar-btn">🕯 Be Safe Lily</div>
   <div class="taskbar-clock" id="clock"></div>
 </div>

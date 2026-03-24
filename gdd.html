@@ -7,33 +7,33 @@
 <style>
   *{box-sizing:border-box;margin:0;padding:0;}
   :root{
-    --bg:#121212;
-    --surface:#1e1e1e;
-    --border:#2c2c2c;
-    --border-dark:#3a3a3a;
-    --accent:#4a90e2;
+    --bg:#0d1117;
+    --surface:#1a1f2e;
+    --border:#30363d;
+    --border-dark:#484f58;
+    --accent:#58a6ff;
     --red:#c0392b;
     --green:#27ae60;
     --yellow:#e8a020;
-    --text:#e0e0e0;
-    --text-muted:#b0b0b0;
-    --win-title:#3a6ea5;
+    --text:#f0f6fc;
+    --text-muted:#95a5ad;
+    --win-title:#1f6feb;
     --font:'Helvetica',sans-serif;
-    --shadow:2px 2px 0px #2c2c2c;
+    --shadow:2px 2px 0px #0d0d0d;
   }
   body{background:var(--bg);font-family:var(--font);font-size:17px;color:var(--text);line-height:1.65;padding-bottom:60px;}
 
-  .navbar{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:2px solid;border-color:#fff #999 #999 #fff;box-shadow:0 2px 0 var(--border-dark);display:flex;align-items:center;padding:8px 24px;gap:12px;}
-  .nav-back{background:var(--surface);border:2px solid;border-color:#fff #999 #999 #fff;padding:6px 16px;font-family:var(--font);font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;color:var(--text);display:flex;align-items:center;gap:6px;}
-  .nav-back:active{border-color:#999 #fff #fff #999;}
+  .navbar{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:2px solid var(--border);display:flex;align-items:center;padding:8px 24px;gap:12px;}
+  .nav-back{background:var(--surface);border:2px solid var(--border);padding:6px 16px;font-family:var(--font);font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;color:var(--text);display:flex;align-items:center;gap:6px;}
+
   .nav-title{font-size:15px;font-weight:700;color:var(--text-muted);}
   .nav-sep{color:var(--border-dark);}
 
-  .window{background:var(--surface);border:2px solid;border-color:#fff #999 #999 #fff;box-shadow:var(--shadow);}
+  .window{background:var(--surface);border:2px solid var(--border);}
   .window-titlebar{background:var(--win-title);color:#fff;padding:6px 12px;display:flex;align-items:center;justify-content:space-between;font-size:14px;font-weight:bold;user-select:none;}
   .window-titlebar.dark{background:#1a1a2e;}
   .window-controls{display:flex;gap:4px;}
-  .win-btn{width:18px;height:16px;background:var(--bg);border:2px solid;border-color:#fff #999 #999 #fff;font-size:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+  .win-btn{width:18px;height:16px;background:var(--bg);border:1px solid var(--border-dark);font-size:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
   .window-body{padding:28px 32px;}
 
   .page-wrap{max-width:960px;margin:0 auto;padding:32px 24px;display:flex;flex-direction:column;gap:24px;}
@@ -57,7 +57,7 @@
 
   .plain-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
   .plain-list li{font-size:16px;color:var(--text-muted);padding-left:20px;position:relative;line-height:1.65;}
-  .plain-list li::before{content:'→';position:absolute;left:0;color:var(--accent);font-weight:700;}
+  .plain-list li::before{content:'->';position:absolute;left:0;color:var(--accent);font-weight:700;}
   .plain-list li strong{color:var(--text);}
 
   .pull-quote{border-left:4px solid var(--win-title);padding:14px 20px;background:var(--bg);margin-bottom:24px;}
@@ -65,7 +65,7 @@
 
   .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px;}
   @media(max-width:640px){.two-col{grid-template-columns:1fr;}}
-  .card{background:var(--bg);border:2px solid;border-color:#fff #999 #999 #fff;padding:18px 20px;}
+  .card{background:var(--bg);border:2px solid var(--border);padding:18px 20px;}
   .card-label{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
   .card-label.blue{color:var(--accent);}
   .card-label.red{color:var(--red);}
@@ -92,22 +92,22 @@
   .day-desc strong{color:var(--text);}
 
   .zone-row{display:flex;flex-direction:column;gap:12px;margin-bottom:28px;}
-  .zone-card{background:var(--bg);border:2px solid;border-color:#fff #999 #999 #fff;padding:18px 20px;display:flex;gap:18px;align-items:flex-start;}
+  .zone-card{background:var(--bg);border:2px solid var(--border);padding:18px 20px;display:flex;gap:18px;align-items:flex-start;}
   .zone-icon{font-size:30px;flex-shrink:0;line-height:1;margin-top:2px;}
   .zone-name{font-size:16px;font-weight:800;color:var(--text);margin-bottom:5px;}
   .zone-desc{font-size:15px;color:var(--text-muted);line-height:1.7;}
   .zone-desc strong{color:var(--text);}
 
   .project-nav{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
-  .nav-proj-btn{background:var(--bg);border:2px solid;border-color:#fff #999 #999 #fff;padding:12px 20px;font-size:15px;font-weight:600;font-family:var(--font);cursor:pointer;text-decoration:none;color:var(--text);display:flex;align-items:center;gap:8px;flex:1;min-width:180px;}
-  .nav-proj-btn:active{border-color:#999 #fff #fff #999;}
+  .nav-proj-btn{background:var(--bg);border:2px solid var(--border);padding:12px 20px;font-size:15px;font-weight:600;font-family:var(--font);cursor:pointer;text-decoration:none;color:var(--text);display:flex;align-items:center;gap:8px;flex:1;min-width:180px;}
+
   .nav-proj-btn.next{justify-content:flex-end;text-align:right;}
   .proj-label{font-size:12px;font-weight:400;color:var(--text-muted);display:block;}
   .proj-name{font-size:16px;font-weight:700;display:block;}
 
   .taskbar{position:fixed;bottom:0;left:0;right:0;height:40px;background:var(--bg);border-top:2px solid #fff;box-shadow:0 -1px 0 var(--border-dark);display:flex;align-items:center;padding:0 8px;gap:8px;z-index:100;}
-  .taskbar-btn{background:var(--bg);border:2px solid;border-color:#fff #999 #999 #fff;padding:4px 14px;font-size:14px;font-weight:bold;font-family:var(--font);cursor:pointer;text-decoration:none;color:var(--text);}
-  .taskbar-clock{margin-left:auto;border:2px solid;border-color:#999 #fff #fff #999;padding:4px 12px;font-size:14px;}
+  .taskbar-btn{background:var(--bg);border:2px solid var(--border);padding:4px 14px;font-size:14px;font-weight:bold;font-family:var(--font);cursor:pointer;text-decoration:none;color:var(--text);}
+  .taskbar-clock{margin-left:auto;border:2px solid var(--border);padding:4px 12px;font-size:14px;}
 
   @media(max-width:600px){.window-body{padding:20px 16px;}.page-wrap{padding:20px 16px;}}
 </style>
@@ -115,7 +115,7 @@
 <body>
 
 <div class="navbar">
-  <a class="nav-back" href="brothers.html">← Back</a>
+  <a class="nav-back" href="brothers.html">< Back</a>
   <span class="nav-sep">/</span>
   <span class="nav-title">Brothers on the Hill GDD</span>
 </div>
@@ -125,7 +125,7 @@
   <!-- HERO -->
   <div class="window">
     <div class="window-titlebar dark">
-      <span>🏚 Brothers on the Hill Game Design Document</span>
+      <span>Brothers on the Hill Game Design Document</span>
       <div class="window-controls">
         <div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn">✕</div>
       </div>
@@ -140,7 +140,7 @@
   <!-- TABS -->
   <div class="window">
     <div class="window-titlebar">
-      <span>📂 Design Notes</span>
+      <span>Design Notes</span>
       <div class="window-controls">
         <div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn">✕</div>
       </div>
@@ -306,7 +306,7 @@
         <div class="zone-row">
 
           <div class="zone-card">
-            <div class="zone-icon">🏚</div>
+            <div class="zone-icon"></div>
             <div class="zone-body">
               <div class="zone-name">The Hilltop (Start)</div>
               <div class="zone-desc">Where you start. You've been here a while. You have a little bit of food and almost no bandages. No bottles. The city looks bad from up here. Then you hear the radio and decide to go. <strong>This is where you figure out how everything works</strong> before it gets really dangerous.</div>
@@ -314,7 +314,7 @@
           </div>
 
           <div class="zone-card">
-            <div class="zone-icon">🏘</div>
+            <div class="zone-icon"></div>
             <div class="zone-body">
               <div class="zone-name">The Residential Streets</div>
               <div class="zone-desc">The first part of the city. Houses, parked cars, a corner shop. Not too many zombies but enough that you have to be careful. This is where you really learn how the brother works sending him to search houses, hiding when patrols walk past, figuring out when to throw a bottle and when to just wait. The safe room here is a barricaded house. It feels almost normal inside.</div>
@@ -322,7 +322,7 @@
           </div>
 
           <div class="zone-card">
-            <div class="zone-icon">🏭</div>
+            <div class="zone-icon"></div>
             <div class="zone-body">
               <div class="zone-name">The Industrial Yard</div>
               <div class="zone-desc">More zombies and more open space which makes it harder to hide. Big warehouses, shipping containers, a loading dock, broken machinery everywhere. Lots of useful stuff inside the warehouses food crates, supply boxes, medical kits left behind by workers. But the open yard between buildings means zombies can spot you from far away. <strong>The containers are good for hiding and throwing bottles from. The warehouses are good for supplies but bad for escaping.</strong> Some zombies wander the yard in big slow loops which you can learn and use. Others are just standing still in the dark corners of the warehouses waiting for something to walk past.</div>
@@ -330,7 +330,7 @@
           </div>
 
           <div class="zone-card">
-            <div class="zone-icon">🏢</div>
+            <div class="zone-icon"></div>
             <div class="zone-body">
               <div class="zone-name">The Office Building</div>
               <div class="zone-desc">The last part. You go in at the ground floor and work your way up. Each floor is its own small fight clear enough space to move, find the stairs, keep your brother close on the way up. <strong>Once you go through a stairwell door it locks behind you. You cannot go back down.</strong> The roof is the end. If you both make it up there, you've done it.</div>
@@ -359,7 +359,7 @@
   <!-- NAV -->
   <div class="window">
     <div class="window-titlebar">
-      <span>🗂 Project Pages</span>
+      <span>Project Pages</span>
       <div class="window-controls"><div class="win-btn">✕</div></div>
     </div>
     <div class="window-body">
@@ -380,8 +380,8 @@
 </div>
 
 <div class="taskbar">
-  <a href="index.html" class="taskbar-btn">🪟 Start</a>
-  <a href="brothers.html" class="taskbar-btn">🏚 Brothers</a>
+  <a href="index.html" class="taskbar-btn">Start</a>
+  <a href="brothers.html" class="taskbar-btn">Brothers</a>
   <div class="taskbar-btn">📄 GDD</div>
   <div class="taskbar-clock" id="clock"></div>
 </div>
