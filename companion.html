@@ -115,7 +115,7 @@
     <div class="window-body">
       <div class="hero-meta">Unity · C# · NavMesh · State Machine · Physics Projectile · Loot System</div>
       <div class="hero-title">Companion AI</div>
-      <p class="hero-sub">A modular survivor companion for a third-person zombie game. Follow behaviour, hiding, autonomous fleeing, bottle throwing, and scavenging all driven by a clean state machine and a decoupled event layer. Four scripts, no tight coupling between them.</p>
+      <p class="hero-sub">A modular survivor companion system. Follow behaviour, hiding, autonomous fleeing, bottle throwing, and scavenging all driven by a clean state machine and a decoupled event layer. Four scripts, no tight coupling between them.</p>
       <div class="stat-row">
         <div class="stat"><div class="stat-num">4</div><div class="stat-label">Scripts</div></div>
         <div class="stat"><div class="stat-num">7</div><div class="stat-label">AI States</div></div>
@@ -151,28 +151,28 @@
         <div class="gif-grid">
 
           <div class="gif-item wide">
-            <video src="followGIF.mp4" autoplay loop muted playsinline style="width:100%;display:block;object-fit:cover;"></video>
+            <div style="position:relative;width:100%;padding-top:56.25%;overflow:hidden;border-radius:inherit;"><iframe src="https://www.youtube.com/embed/VM49W6DiwDw?autoplay=1&mute=1&loop=1&playlist=VM49W6DiwDw&controls=0&rel=0&modestbranding=1&showinfo=0&iv_load_policy=3&disablekb=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;pointer-events:none;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
             <div class="gif-caption">Follow state. The companion trails behind the player along their movement direction, staying out of the shooting line.</div>
           </div>
 
           <div class="gif-item">
-            <video src="hidingGIF.mp4" autoplay loop muted playsinline style="width:100%;display:block;object-fit:cover;"></video>
-            <div class="gif-caption">Hiding state. On CommandHide() she sprints to the nearest hiding spot and crouches. Immune to zombie detection while hidden.</div>
+            <div style="position:relative;width:100%;padding-top:56.25%;overflow:hidden;border-radius:inherit;"><iframe src="https://www.youtube.com/embed/-UFcQUppujA?autoplay=1&mute=1&loop=1&playlist=-UFcQUppujA&controls=0&rel=0&modestbranding=1&showinfo=0&iv_load_policy=3&disablekb=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;pointer-events:none;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
+            <div class="gif-caption">Hiding state. On CommandHide() it sprints to the nearest hiding spot and crouches. Immune to zombie detection while hidden.</div>
           </div>
 
           <div class="gif-item">
-            <video src="clearGIF.mp4" autoplay loop muted playsinline style="width:100%;display:block;object-fit:cover;"></video>
-            <div class="gif-caption">CommandClear(). She exits the hiding spot and returns to Follow. Player confirms the area is safe.</div>
+            <div style="position:relative;width:100%;padding-top:56.25%;overflow:hidden;border-radius:inherit;"><iframe src="https://www.youtube.com/embed/Ai5V5sWNxcM?autoplay=1&mute=1&loop=1&playlist=Ai5V5sWNxcM&controls=0&rel=0&modestbranding=1&showinfo=0&iv_load_policy=3&disablekb=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;pointer-events:none;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
+            <div class="gif-caption">CommandClear(). It exits the hiding spot and returns to Follow. Player confirms the area is safe.</div>
           </div>
 
           <div class="gif-item">
-            <video src="lootGIF.mp4" autoplay loop muted playsinline style="width:100%;display:block;object-fit:cover;"></video>
-            <div class="gif-caption">Scavenging state. On CommandScavenge() she walks to the nearest LootSpot, waits the scavenge timer, then returns with supplies.</div>
+            <div style="position:relative;width:100%;padding-top:56.25%;overflow:hidden;border-radius:inherit;"><iframe src="https://www.youtube.com/embed/iNzNpCItSTw?autoplay=1&mute=1&loop=1&playlist=iNzNpCItSTw&controls=0&rel=0&modestbranding=1&showinfo=0&iv_load_policy=3&disablekb=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;pointer-events:none;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
+            <div class="gif-caption">Scavenging state. On CommandScavenge() it walks to the nearest LootSpot, waits the scavenge timer, then returns with supplies.</div>
           </div>
 
           <div class="gif-item">
-            <video src="fleeingGIF.mp4" autoplay loop muted playsinline style="width:100%;display:block;object-fit:cover;"></video>
-            <div class="gif-caption">Fleeing state. After taking a hit with enough zombies nearby, she sprints to a sampled NavMesh point away from the threat cluster.</div>
+            <div style="position:relative;width:100%;padding-top:56.25%;overflow:hidden;border-radius:inherit;"><iframe src="https://www.youtube.com/embed/K83swc5hOtw?autoplay=1&mute=1&loop=1&playlist=K83swc5hOtw&controls=0&rel=0&modestbranding=1&showinfo=0&iv_load_policy=3&disablekb=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;pointer-events:none;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
+            <div class="gif-caption">Fleeing state. After taking a hit with enough zombies nearby, it sprints to a sampled NavMesh point away from the threat cluster.</div>
           </div>
 
         </div>
